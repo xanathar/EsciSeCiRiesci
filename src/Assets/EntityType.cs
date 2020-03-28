@@ -9,9 +9,31 @@ public enum EntityType
     Telefono,
     Scrigno,
     Giornali,
-    Lampadina,
     PortaStanza,
     Lampadario,
+
+    Insalata,
+    Lampadina,
+
+    Scala,
+    Olio,
+    Aceto,
+    Lattuga,
+    Calamaro,
+    Forbici,
+    Chiave,
+    Bicarbonato,
+    Password,
+
+    Mascherina,
+    Guanti,
+    Autocertificazione
+
+
+
+
+
+
 }
 
 
