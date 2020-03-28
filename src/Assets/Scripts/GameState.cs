@@ -10,7 +10,7 @@ public class InventoryItem
 
 public static class GameState
 {
-    public static RoomType CurrentRoom = RoomType.Soggiorno;
+    public static RoomType CurrentRoom = RoomType.Cucina;
     public static HashSet<EntityType> PickedEntities = new HashSet<EntityType>();
     public static List<InventoryItem> InventoryItems = new List<InventoryItem>();
 

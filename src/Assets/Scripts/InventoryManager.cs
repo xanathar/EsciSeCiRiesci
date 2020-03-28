@@ -1,17 +1,29 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class InventoryManager : MonoBehaviour
 {
-    public InventoryObject Slot1;
-    public InventoryObject Slot2;
-    public InventoryObject Slot3;
+    const int EXPECTED_INVENTORY_SLOTS = 10;
+
     public Text InteractionText;
 
+    List<InventoryObject> inventorySlots;
+
     InventoryObject activeObject = null;
+
+    public void Awake()
+    {
+        inventorySlots = this.gameObject.GetComponentsInChildren<InventoryObject>().ToList();
+
+        if (inventorySlots.Count != EXPECTED_INVENTORY_SLOTS)
+            Debug.LogErrorFormat("Found {0} inventory slots instead of {1}", inventorySlots.Count, 10);
+    }
+
+
 
     public void AddItem(Sprite s, EntityType et)
     {
@@ -22,12 +34,8 @@ public class InventoryManager : MonoBehaviour
     {
         GameState.InventoryItems.Clear();
 
-        if (!Slot1.IsFree())
-            GameState.InventoryItems.Add(Slot1.AsInventoryItem());
-        if (!Slot2.IsFree())
-            GameState.InventoryItems.Add(Slot2.AsInventoryItem());
-        if (!Slot3.IsFree())
-            GameState.InventoryItems.Add(Slot3.AsInventoryItem());
+        for (int i = 0; i < inventorySlots.Count; i++)
+            GameState.InventoryItems.Add(inventorySlots[i].AsInventoryItem());
 
         Debug.LogFormat("Backup'd {0} inventory items", GameState.InventoryItems.Count);
         GameState.Dump();
@@ -35,9 +43,8 @@ public class InventoryManager : MonoBehaviour
 
     public void Restore()
     {
-        Slot1.Clear();
-        Slot2.Clear();
-        Slot3.Clear();
+        for (int i = 0; i < inventorySlots.Count; i++)
+            inventorySlots[i].Clear();
 
         foreach (var ii in GameState.InventoryItems)
         {
@@ -51,12 +58,11 @@ public class InventoryManager : MonoBehaviour
 
     private InventoryObject FindFreeSlot()
     {
-        if (Slot1.IsFree())
-            return Slot1;
-        if (Slot2.IsFree())
-            return Slot2;
-        if (Slot3.IsFree())
-            return Slot3;
+        for (int i = 0; i < inventorySlots.Count; i++)
+        {
+            if (inventorySlots[i].IsFree())
+                return inventorySlots[i];
+        }
 
         Debug.Log("INVENTORY IS FULL!!");
         return null;

@@ -10,7 +10,7 @@ public class ActionLogger : MonoBehaviour
 
     void Start()
     {
-        this.GetComponent<Text>().text = "\nBenvenuti!";
+
     }
 
     public void Log(string txt)

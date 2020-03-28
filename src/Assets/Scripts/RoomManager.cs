@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class RoomManager : MonoBehaviour
@@ -10,7 +11,7 @@ public class RoomManager : MonoBehaviour
     public Text InteractionText;
     public ActionLogger ActionLog;
     public InventoryManager Inventory;
-    public List<RoomMarker> RoomMarkers;
+    public Image TravelFader;
 
     Room m_Room;
     RoomMarker m_RoomMarker;
@@ -18,14 +19,16 @@ public class RoomManager : MonoBehaviour
 
     private void Start()
     {
-        Dictionary<RoomType, RoomMarker> roomMarkersByType = RoomMarkers.ToDictionary(rm => rm.WhichRoom);
+        TravelFader.transform.localPosition = new Vector3(-124, TravelFader.transform.localPosition.y, TravelFader.transform.localPosition.z);
+
+        Dictionary<RoomType, RoomMarker> roomMarkersByType = this.gameObject.GetComponentsInChildren<RoomMarker>().ToDictionary(rm => rm.WhichRoom);
         Dictionary<RoomType, Room> roomsByType = Room.RoomLogicFactory().ToDictionary(r => r.GetRoomType());
 
         if (!(new HashSet<RoomType>(roomMarkersByType.Keys)).SetEquals(new HashSet<RoomType>(roomsByType.Keys)))
             Debug.LogError("Room markers and logics do not match!");
 
         foreach (var room in roomMarkersByType.Values.Where(rr => rr.WhichRoom != GameState.CurrentRoom))
-            room.enabled = false;
+            room.gameObject.SetActive(false);
 
         m_Room = roomsByType[GameState.CurrentRoom];
         m_RoomMarker = roomMarkersByType[GameState.CurrentRoom];
@@ -35,7 +38,38 @@ public class RoomManager : MonoBehaviour
         m_Room.Init(this);
 
         InitEntities();
+
+        InteractionText.text = "";
+
+        m_Room.EnterRoom();
+
+        StartCoroutine(FadeEnter());
     }
+
+    public bool InteractionsEnabled = true;
+
+    IEnumerator FadeEnter()
+    {
+        for (float alpha = 1f; alpha > 0f; alpha -= Time.deltaTime * 2f) {
+            TravelFader.Shade(alpha);
+            yield return null;
+        }
+        TravelFader.Shade(0f);
+    }
+
+    IEnumerator FadeExit()
+    {
+        InteractionsEnabled = false;
+
+        for (float alpha = 0f; alpha < 1f; alpha += Time.deltaTime * 2f)
+        {
+            TravelFader.Shade(alpha);
+            yield return null;
+        }
+        TravelFader.Shade(1f);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
 
     private void InitEntities()
     {
@@ -58,6 +92,11 @@ public class RoomManager : MonoBehaviour
                 e.Init(this, m_Room);
             }
         }
+    }
+
+    internal void StartTravel()
+    {
+        StartCoroutine(FadeExit());
     }
 
     public static RoomManager FindInstance()

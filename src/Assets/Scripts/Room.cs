@@ -9,22 +9,21 @@ public abstract class Room
 {
     public static IEnumerable<Room> RoomLogicFactory()
     {
-        yield return new Soggiorno();
+        yield return new Cucina();
+        yield return new Corridoio();
     }
-
-
-
 
     private RoomManager roomManager;
 
     public abstract RoomType GetRoomType();
     public abstract IEnumerable<EntityType> AcceptedEntities();
-    public abstract void StartInteraction(IEntity e);
-    public abstract void StartInventoryInteraction(EntityType inventory, IEntity e);
-    public abstract void ConfirmInteraction(IEntity e);
-    public abstract bool ConfirmInventoryInteraction(EntityType inventory, IEntity e);
+    public abstract void StartInteraction(EntityType e);
+    public abstract void StartInventoryInteraction(EntityType inventory, EntityType e);
+    public abstract void ConfirmInteraction(EntityType e);
+    public abstract bool ConfirmInventoryInteraction(EntityType inventory, EntityType e);
+    public abstract void EnterRoom();
 
-    public virtual void StopInteraction(IEntity e)
+    public virtual void StopInteraction(EntityType e)
     {
         ClearPrompt();
     }
@@ -59,19 +58,19 @@ public abstract class Room
         get { return this.roomManager.Inventory; }
     }
 
-    protected void PickEntity(IEntity e)
+    protected void PickEntity(EntityType e)
     {
-        Sprite S = e.Pick();
-        Inventory.AddItem(S, e.GetEntityType());
-        GameState.PickedEntities.Add(e.GetEntityType());
+        //Sprite S = e.Pick();
+        //Inventory.AddItem(S, e.GetEntityType());
+        //GameState.PickedEntities.Add(e.GetEntityType());
         ClearPrompt();
     }
 
     protected void Travel(RoomType rt)
     {
         GameState.CurrentRoom = rt;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         Inventory.Backup();
+        roomManager.StartTravel();
     }
 
 }

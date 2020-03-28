@@ -13,8 +13,8 @@ public class InventoryObject : MonoBehaviour, IPointerEnterHandler, IPointerExit
 
     void Start()
     {
-        InventoryHighlight.GetComponent<Image>().color = new Color(0, 0, 0, 0);
-        this.GetComponent<Image>().color = new Color(0, 0, 0, 0);
+        InventoryHighlight.Shade(0, 1);
+        this.Shade(0);
     }
 
     internal void Assign(Sprite s, EntityType et)
@@ -42,15 +42,15 @@ public class InventoryObject : MonoBehaviour, IPointerEnterHandler, IPointerExit
     {
         if (entity != EntityType.Unknown)
         {
-            InventoryHighlight.GetComponent<Image>().color = new Color(1, 1, 1, 1);
+            InventoryHighlight.Shade(1, 1);
             InventoryManager.StartInteraction(this);
         }
     }
 
     public void Clear()
     {
-        InventoryHighlight.GetComponent<Image>().color = new Color(0, 0, 0, 0);
-        this.GetComponent<Image>().color = new Color(0, 0, 0, 0);
+        InventoryHighlight.Shade(0, 1);
+        this.Shade(0);
         this.GetComponent<Image>().overrideSprite = null;
         entity = EntityType.Unknown;
     }
@@ -64,7 +64,7 @@ public class InventoryObject : MonoBehaviour, IPointerEnterHandler, IPointerExit
     {
         if (entity != EntityType.Unknown)
         {
-            InventoryHighlight.GetComponent<Image>().color = new Color(0, 0, 0, 0);
+            InventoryHighlight.Shade(0, 1);
             InventoryManager.StopInteraction(this);
         }
     }

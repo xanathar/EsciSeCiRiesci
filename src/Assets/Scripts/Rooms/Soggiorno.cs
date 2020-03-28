@@ -5,18 +5,27 @@ using UnityEngine;
 
 public class Soggiorno : Room
 {
+    public Soggiorno()
+    {
+    }
+    public override void EnterRoom()
+    {
+        Log("Scegli dove andare");
+    }
+
+
     public override IEnumerable<EntityType> AcceptedEntities()
     {
         yield return EntityType.Giornali;
         yield return EntityType.Telefono;
         yield return EntityType.Scrigno;
         yield return EntityType.Lampadina;
-        yield return EntityType.PortaStanza;
+        yield return EntityType.Porta;
     }
 
-    public override void ConfirmInteraction(IEntity e)
+    public override void ConfirmInteraction(EntityType e)
     {
-        switch (e.GetEntityType())
+        switch (e)
         {
             case EntityType.Giornali:
                 Log("Non è il momento di leggere!");
@@ -31,16 +40,16 @@ public class Soggiorno : Room
                 Log("Hai preso la lampadina.");
                 PickEntity(e);
                 break;
-            case EntityType.PortaStanza:
+            case EntityType.Porta:
                 Travel(RoomType.Soggiorno);
                 break;
             default:
-                Debug.LogErrorFormat("Unknown entity : {0}", e.GetEntityType());
+                Debug.LogErrorFormat("Unknown entity : {0}", e);
                 break;
         }
     }
 
-    public override bool ConfirmInventoryInteraction(EntityType inventory, IEntity e)
+    public override bool ConfirmInventoryInteraction(EntityType inventory, EntityType e)
     {
         LogRandomFailure();
         return false;
@@ -51,9 +60,9 @@ public class Soggiorno : Room
         return RoomType.Soggiorno;
     }
 
-    public override void StartInteraction(IEntity e)
+    public override void StartInteraction(EntityType e)
     {
-        switch (e.GetEntityType())
+        switch (e)
         {
             case EntityType.Giornali:
                 Prompt("Vedi un mucchio di giornali");
@@ -67,18 +76,18 @@ public class Soggiorno : Room
             case EntityType.Lampadina:
                 Prompt("Vedi una lampadina di ricambio");
                 break;
-            case EntityType.PortaStanza:
+            case EntityType.Porta:
                 Prompt("Vedi una porta", Inventory.InventoryShortName);
                 break;
             default:
-                Debug.LogErrorFormat("Unknown entity : {0}", e.GetEntityType());
+                Debug.LogErrorFormat("Unknown entity : {0}", e);
                 break;
         }
     }
 
-    public override void StartInventoryInteraction(EntityType inventory, IEntity e)
+    public override void StartInventoryInteraction(EntityType inventory, EntityType e)
     {
-        switch (e.GetEntityType())
+        switch (e)
         {
             case EntityType.Giornali:
                 Prompt("Usa {0} con i giornali", Inventory.InventoryShortName);
@@ -89,14 +98,14 @@ public class Soggiorno : Room
             case EntityType.Scrigno:
                 Prompt("Usa {0} con lo strano scrigno", Inventory.InventoryShortName);
                 break;
-            case EntityType.PortaStanza:
+            case EntityType.Porta:
                 Prompt("Usa {0} con la porta", Inventory.InventoryShortName);
                 break;
             case EntityType.Lampadina:
-                Debug.LogErrorFormat("Unknown entity : {0}", e.GetEntityType());
+                Debug.LogErrorFormat("Unknown entity : {0}", e);
                 break;
             default:
-                Debug.LogErrorFormat("Unknown entity : {0}", e.GetEntityType());
+                Debug.LogErrorFormat("Unknown entity : {0}", e);
                 break;
         }
     }

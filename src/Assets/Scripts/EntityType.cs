@@ -9,7 +9,7 @@ public enum EntityType
     Telefono,
     Scrigno,
     Giornali,
-    PortaStanza,
+    Porta,
     Lampadario,
 
     Insalata,
@@ -27,13 +27,13 @@ public enum EntityType
 
     Mascherina,
     Guanti,
-    Autocertificazione
+    Autocertificazione,
 
 
-
-
-
-
+    Corridoio_Soggiorno,
+    Corridoio_Cucina,
+    Corridoio_Balcone,
+    Corridoio_Camera
 }
 
 

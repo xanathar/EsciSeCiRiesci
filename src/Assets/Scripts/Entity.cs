@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -13,52 +14,82 @@ public class Entity : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, 
     private Room m_Room;
     private RoomManager m_RoomManager;
 
+    private float targetAlphaColor = 0f;
+    private float currentAlphaColor = 0f;
+
+    private void Awake()
+    {
+        this.Shade(0);
+        targetAlphaColor = 0f;
+        currentAlphaColor = 0f;
+    }
+
     private void Start()
     {
         if (highlight == null)
             highlight = this.GetComponent<Image>();
 
-        this.GetComponent<Image>().color = new Color(0, 0, 0, 0);
-        highlight.color = new Color(0, 0, 0, 0);
+        highlight.Shade(1, 0);
     }
+
+    private void Update()
+    {
+        if (currentAlphaColor < targetAlphaColor)
+        {
+            currentAlphaColor = Math.Min(targetAlphaColor, currentAlphaColor + Time.deltaTime * 4f);
+            highlight.Shade(1, currentAlphaColor);
+        }
+        else if (currentAlphaColor > targetAlphaColor)
+        {
+            currentAlphaColor = Math.Max(targetAlphaColor, currentAlphaColor - Time.deltaTime * 4f);
+            highlight.Shade(1, currentAlphaColor);
+        }
+    }
+
+
+
 
     public void Init(RoomManager roomManager, Room room)
     {
+        Debug.LogFormat("Entity {0} Initialized!!", this.EntityType);
+
         m_RoomManager = roomManager;
         m_Room = room;
+ 
+        Utils.Assert(m_RoomManager != null, "Entity {0} has null room manager", this.EntityType);
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        highlight.color = new Color(1, 1, 1, 1);
+        targetAlphaColor = 1f;
 
         if (m_RoomManager.Inventory.ActiveItem != EntityType.Unknown)
         {
-            m_Room.StartInventoryInteraction(m_RoomManager.Inventory.ActiveItem, this);
+            m_Room.StartInventoryInteraction(m_RoomManager.Inventory.ActiveItem, this.GetEntityType());
         }
         else
         {
-            m_Room.StartInteraction(this);
+            m_Room.StartInteraction(this.GetEntityType());
         }
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        highlight.color = new Color(0, 0, 0, 0);
-        m_Room.StopInteraction(this);
+        targetAlphaColor = 0f;
+        m_Room.StopInteraction(this.GetEntityType());
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
         if (m_RoomManager.Inventory.ActiveItem != EntityType.Unknown)
         {
-            bool usedUp = m_Room.ConfirmInventoryInteraction(m_RoomManager.Inventory.ActiveItem, this);
+            bool usedUp = m_Room.ConfirmInventoryInteraction(m_RoomManager.Inventory.ActiveItem, this.GetEntityType());
             m_RoomManager.Inventory.ClearActiveObject(usedUp);
             m_RoomManager.InteractionText.text = m_RoomManager.Inventory.GetDefaultActionInteractionText();
         }
         else
         {
-            m_Room.ConfirmInteraction(this);
+            m_Room.ConfirmInteraction(this.GetEntityType());
         }
     }
 
