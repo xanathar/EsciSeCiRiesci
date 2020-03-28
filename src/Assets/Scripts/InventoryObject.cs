@@ -24,15 +24,6 @@ public class InventoryObject : MonoBehaviour, IPointerEnterHandler, IPointerExit
         this.GetComponent<Image>().color = new Color(1, 1, 1, 1);
     }
 
-    internal InventoryItem AsInventoryItem()
-    {
-        return new InventoryItem()
-        {
-            Sprite = this.GetComponent<Image>().overrideSprite,
-            EntityType = this.GetEntityType()
-        };
-    }
-
     internal bool IsFree()
     {
         return entity == EntityType.Unknown;

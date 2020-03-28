@@ -34,8 +34,6 @@ public class RoomManager : MonoBehaviour
         m_Room = roomsByType[GameState.CurrentRoom];
         m_RoomMarker = roomMarkersByType[GameState.CurrentRoom];
 
-        Inventory.Restore();
-
         m_Room.Init(this);
 
         InitEntities();
@@ -88,20 +86,18 @@ public class RoomManager : MonoBehaviour
 
             if (GameState.PickedEntities.Contains(et))
             {
-                e.Pick();
+                e.DisableEntityPermanently();
+            }
+
+            if (m_Entities.ContainsKey(et))
+            {
+                Utils.Error("Duplicated entity {0} in room {1}", et, m_Room.GetRoomType());
             }
             else
             {
-                if (m_Entities.ContainsKey(et))
-                {
-                    Utils.Error("Duplicated entity {0} in room {1}", et, m_Room.GetRoomType());
-                }
-                else
-                {
-                    m_Entities.Add(et, e);
-                }
-                e.Init(this, m_Room);
+                m_Entities.Add(et, e);
             }
+            e.Init(this, m_Room);
         }
     }
 

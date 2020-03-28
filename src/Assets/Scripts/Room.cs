@@ -60,9 +60,9 @@ public abstract class Room
 
     protected void PickEntity(EntityType e)
     {
-        //Sprite S = e.Pick();
-        //Inventory.AddItem(S, e.GetEntityType());
-        //GameState.PickedEntities.Add(e.GetEntityType());
+        Inventory.AddItem(e);
+        GameState.PickedEntities.Add(e);
+        roomManager.GetEntityObject(e).DisableEntityPermanently();
         ClearPrompt();
     }
 

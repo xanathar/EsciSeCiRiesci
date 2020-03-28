@@ -2,17 +2,11 @@
 using System.Text;
 using UnityEngine;
 
-public class InventoryItem
-{
-    public Sprite Sprite;
-    public EntityType EntityType;
-}
-
 public static class GameState
 {
     public static RoomType CurrentRoom = RoomType.Cucina;
     public static HashSet<EntityType> PickedEntities = new HashSet<EntityType>();
-    public static List<InventoryItem> InventoryItems = new List<InventoryItem>();
+    public static List<EntityType> InventoryItems = new List<EntityType>();
 
     public static void Dump()
     {
@@ -28,7 +22,7 @@ public static class GameState
         sb.AppendLine("Inventory items:");
 
         foreach (var ee in InventoryItems)
-            sb.AppendLine("\t" + ee.EntityType.ToString());
+            sb.AppendLine("\t" + ee.ToString());
 
         Debug.Log(sb.ToString());
     }

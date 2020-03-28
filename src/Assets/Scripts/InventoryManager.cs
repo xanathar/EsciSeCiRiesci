@@ -11,9 +11,14 @@ public class InventoryManager : MonoBehaviour
 
     public Text InteractionText;
 
+    public GameObject inventoryPlaceholderRoot;
+
     List<InventoryObject> inventorySlots;
 
     InventoryObject activeObject = null;
+
+    Dictionary<EntityType, Sprite> m_SpriteDatabase;
+
 
     public void Awake()
     {
@@ -23,11 +28,20 @@ public class InventoryManager : MonoBehaviour
             Debug.LogErrorFormat("Found {0} inventory slots instead of {1}", inventorySlots.Count, 10);
     }
 
-
-
-    public void AddItem(Sprite s, EntityType et)
+    public void Start()
     {
-        FindFreeSlot().Assign(s, et);
+        m_SpriteDatabase = inventoryPlaceholderRoot
+            .GetComponentsInChildren<InventoryPlaceholder>()
+            .Where(p => p.Item != EntityType.Unknown)
+            .ToDictionary(p => p.Item, p => p.GetComponent<Image>().sprite);
+
+        Restore();
+    }
+
+
+    public void AddItem(EntityType et)
+    {
+        FindFreeSlot().Assign(m_SpriteDatabase[et], et);
     }
 
     public void Backup()
@@ -35,20 +49,21 @@ public class InventoryManager : MonoBehaviour
         GameState.InventoryItems.Clear();
 
         for (int i = 0; i < inventorySlots.Count; i++)
-            GameState.InventoryItems.Add(inventorySlots[i].AsInventoryItem());
+            GameState.InventoryItems.Add(inventorySlots[i].GetEntityType());
 
         Debug.LogFormat("Backup'd {0} inventory items", GameState.InventoryItems.Count);
         GameState.Dump();
     }
 
-    public void Restore()
+    private void Restore()
     {
         for (int i = 0; i < inventorySlots.Count; i++)
             inventorySlots[i].Clear();
 
         foreach (var ii in GameState.InventoryItems)
         {
-            AddItem(ii.Sprite, ii.EntityType);
+            if (ii != EntityType.Unknown)
+                AddItem(ii);
         }
 
         Debug.LogFormat("Restored {0} inventory items", GameState.InventoryItems.Count);
@@ -70,10 +85,17 @@ public class InventoryManager : MonoBehaviour
 
     internal void StartInteraction(InventoryObject inventoryObject)
     {
+        if (GameState.CurrentRoom == RoomType.Corridoio)
+        {
+            InteractionText.text = "Non ha molto senso usare un oggetto qui";
+            return;
+        }
+
+
         switch (inventoryObject.GetEntityType())
         {
-            case EntityType.Lampadina:
-                InteractionText.text = "Usa lampadina che hai preso dal soggiorno...";
+            case EntityType.Insalata:
+                InteractionText.text = "Usa vaschetta di insalata preconfezionata, marca 'Dammi Del Tu'.";
                 break;
             default:
                 Debug.LogError("Unknown entity!!");
@@ -88,6 +110,12 @@ public class InventoryManager : MonoBehaviour
 
     internal void CommitInteraction(InventoryObject inventoryObject)
     {
+        if (GameState.CurrentRoom == RoomType.Corridoio)
+        {
+            InteractionText.text = "Non ha molto senso usare un oggetto qui";
+            return;
+        }
+
         activeObject = inventoryObject;
         InteractionText.text = GetDefaultActionInteractionText();
     }

@@ -28,6 +28,11 @@ public class Cucina : Room
 
     public override void ConfirmInteraction(EntityType e)
     {
+        if (e == EntityType.Insalata)
+        {
+            PickEntity(EntityType.Insalata);
+        }
+
         if (e == EntityType.Porta)
             Travel(RoomType.Corridoio);
 

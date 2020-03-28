@@ -5,10 +5,9 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class Entity : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler, IEntity
+public class Entity : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
     public EntityType EntityType;
-    public bool IsPickable;
     public Image highlight;
 
     private Room m_Room;
@@ -18,6 +17,7 @@ public class Entity : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, 
     private float currentAlphaColor = 0f;
 
     private bool m_Enabled = true;
+    private bool m_PermanentDisabled = false;
     private bool m_StateChecked = false;
 
     private void Awake()
@@ -29,7 +29,13 @@ public class Entity : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, 
 
     public bool IsEnabledEntity()
     {
-        return m_Enabled && (m_RoomManager == null || m_RoomManager.InteractionsEnabled);
+        return (!m_PermanentDisabled) && m_Enabled && (m_RoomManager == null || m_RoomManager.InteractionsEnabled);
+    }
+
+    public void DisableEntityPermanently()
+    {
+        DisableEntity();
+        m_PermanentDisabled = true;
     }
 
     public void DisableEntity()
@@ -44,9 +50,12 @@ public class Entity : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, 
 
     public void EnableEntity()
     {
-        this.Shade(1);
-        highlight.Shade(1, 0);
-        m_Enabled = true;
+        if (!m_PermanentDisabled)
+        {
+            this.Shade(1);
+            highlight.Shade(1, 0);
+            m_Enabled = true;
+        }
     }
 
     private void Start()
@@ -86,11 +95,9 @@ public class Entity : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, 
 
     public void Init(RoomManager roomManager, Room room)
     {
-        Debug.LogFormat("Entity {0} Initialized!!", this.EntityType);
-
         m_RoomManager = roomManager;
         m_Room = room;
- 
+
         Utils.Assert(m_RoomManager != null, "Entity {0} has null room manager", this.EntityType);
     }
 
@@ -141,22 +148,4 @@ public class Entity : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, 
         return EntityType;
     }
 
-    public Sprite Pick()
-    {
-        if (IsEnabledEntity())
-        {
-            if (IsPickable)
-            {
-                Sprite img = this.gameObject.transform.parent.GetComponent<Image>().sprite;
-                this.gameObject.transform.parent.gameObject.SetActive(false);
-                this.gameObject.SetActive(false);
-                return img;
-            }
-            else
-            {
-                Debug.LogError("PICKED NOT PICKABLE!!");
-            }
-        }
-        return null;
-    }
 }
