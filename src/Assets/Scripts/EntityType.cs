@@ -29,6 +29,9 @@ public enum EntityType
     Guanti,
     Autocertificazione,
 
+    Lavandino,
+    Rubinetti,
+    Frigorifero,
 
     Corridoio_Soggiorno,
     Corridoio_Cucina,

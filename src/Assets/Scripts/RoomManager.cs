@@ -16,6 +16,7 @@ public class RoomManager : MonoBehaviour
     Room m_Room;
     RoomMarker m_RoomMarker;
     Dictionary<EntityType, Entity> m_Entities = new Dictionary<EntityType, Entity>();
+    Dictionary<OverlayType, RoomOverlay> m_Overlays = null;
 
     private void Start()
     {
@@ -50,7 +51,8 @@ public class RoomManager : MonoBehaviour
 
     IEnumerator FadeEnter()
     {
-        for (float alpha = 1f; alpha > 0f; alpha -= Time.deltaTime * 2f) {
+        for (float alpha = 1f; alpha > 0f; alpha -= Time.deltaTime * 2f)
+        {
             TravelFader.Shade(alpha);
             yield return null;
         }
@@ -75,6 +77,8 @@ public class RoomManager : MonoBehaviour
     {
         HashSet<EntityType> acceptedEntities = new HashSet<EntityType>(m_Room.AcceptedEntities());
 
+        m_Overlays = m_RoomMarker.GetComponentsInChildren<RoomOverlay>().ToDictionary(ro => ro.WhichOverlay);
+
         foreach (Entity e in m_RoomMarker.GetComponentsInChildren<Entity>())
         {
             EntityType et = e.EntityType;
@@ -88,7 +92,14 @@ public class RoomManager : MonoBehaviour
             }
             else
             {
-                m_Entities.Add(et, e);
+                if (m_Entities.ContainsKey(et))
+                {
+                    Utils.Error("Duplicated entity {0} in room {1}", et, m_Room.GetRoomType());
+                }
+                else
+                {
+                    m_Entities.Add(et, e);
+                }
                 e.Init(this, m_Room);
             }
         }
@@ -102,5 +113,31 @@ public class RoomManager : MonoBehaviour
     public static RoomManager FindInstance()
     {
         return GameObject.FindObjectOfType<RoomManager>();
+    }
+
+    public Entity GetEntityObject(EntityType entityType)
+    {
+        Entity value;
+        if (m_Entities.TryGetValue(entityType, out value))
+        {
+            return value;
+        }
+
+        Utils.Error("Cannot find {0} in entity map", entityType);
+
+        return null;
+    }
+
+    public RoomOverlay GetRoomOverlay(OverlayType overlayType)
+    {
+        RoomOverlay value;
+        if (m_Overlays.TryGetValue(overlayType, out value))
+        {
+            return value;
+        }
+
+        Utils.Error("Cannot find {0} in overlay map", overlayType);
+
+        return null;
     }
 }

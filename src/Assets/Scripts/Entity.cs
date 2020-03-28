@@ -17,11 +17,36 @@ public class Entity : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, 
     private float targetAlphaColor = 0f;
     private float currentAlphaColor = 0f;
 
+    private bool m_Enabled = true;
+    private bool m_StateChecked = false;
+
     private void Awake()
     {
-        this.Shade(0);
+        //this.Shade(1);
         targetAlphaColor = 0f;
         currentAlphaColor = 0f;
+    }
+
+    public bool IsEnabledEntity()
+    {
+        return m_Enabled && (m_RoomManager == null || m_RoomManager.InteractionsEnabled);
+    }
+
+    public void DisableEntity()
+    {
+        this.Shade(0);
+
+        if (highlight != null)
+            highlight.Shade(0);
+
+        m_Enabled = false;
+    }
+
+    public void EnableEntity()
+    {
+        this.Shade(1);
+        highlight.Shade(1, 0);
+        m_Enabled = true;
     }
 
     private void Start()
@@ -34,15 +59,25 @@ public class Entity : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, 
 
     private void Update()
     {
-        if (currentAlphaColor < targetAlphaColor)
+        if (!m_StateChecked)
         {
-            currentAlphaColor = Math.Min(targetAlphaColor, currentAlphaColor + Time.deltaTime * 4f);
-            highlight.Shade(1, currentAlphaColor);
+            m_StateChecked = true;
+
+            Utils.Assert(m_RoomManager != null, "Room manager is null in entity {0}", this.GetEntityType());
         }
-        else if (currentAlphaColor > targetAlphaColor)
+
+        if (IsEnabledEntity())
         {
-            currentAlphaColor = Math.Max(targetAlphaColor, currentAlphaColor - Time.deltaTime * 4f);
-            highlight.Shade(1, currentAlphaColor);
+            if (currentAlphaColor < targetAlphaColor)
+            {
+                currentAlphaColor = Math.Min(targetAlphaColor, currentAlphaColor + Time.deltaTime * 4f);
+                highlight.Shade(1, currentAlphaColor);
+            }
+            else if (currentAlphaColor > targetAlphaColor)
+            {
+                currentAlphaColor = Math.Max(targetAlphaColor, currentAlphaColor - Time.deltaTime * 4f);
+                highlight.Shade(1, currentAlphaColor);
+            }
         }
     }
 
@@ -63,33 +98,41 @@ public class Entity : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, 
     {
         targetAlphaColor = 1f;
 
-        if (m_RoomManager.Inventory.ActiveItem != EntityType.Unknown)
+        if (IsEnabledEntity())
         {
-            m_Room.StartInventoryInteraction(m_RoomManager.Inventory.ActiveItem, this.GetEntityType());
-        }
-        else
-        {
-            m_Room.StartInteraction(this.GetEntityType());
+            if (m_RoomManager.Inventory.ActiveItem != EntityType.Unknown)
+            {
+                m_Room.StartInventoryInteraction(m_RoomManager.Inventory.ActiveItem, this.GetEntityType());
+            }
+            else
+            {
+                m_Room.StartInteraction(this.GetEntityType());
+            }
         }
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
         targetAlphaColor = 0f;
-        m_Room.StopInteraction(this.GetEntityType());
+
+        if (IsEnabledEntity())
+            m_Room.StopInteraction(this.GetEntityType());
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (m_RoomManager.Inventory.ActiveItem != EntityType.Unknown)
+        if (IsEnabledEntity())
         {
-            bool usedUp = m_Room.ConfirmInventoryInteraction(m_RoomManager.Inventory.ActiveItem, this.GetEntityType());
-            m_RoomManager.Inventory.ClearActiveObject(usedUp);
-            m_RoomManager.InteractionText.text = m_RoomManager.Inventory.GetDefaultActionInteractionText();
-        }
-        else
-        {
-            m_Room.ConfirmInteraction(this.GetEntityType());
+            if (m_RoomManager.Inventory.ActiveItem != EntityType.Unknown)
+            {
+                bool usedUp = m_Room.ConfirmInventoryInteraction(m_RoomManager.Inventory.ActiveItem, this.GetEntityType());
+                m_RoomManager.Inventory.ClearActiveObject(usedUp);
+                m_RoomManager.InteractionText.text = m_RoomManager.Inventory.GetDefaultActionInteractionText();
+            }
+            else
+            {
+                m_Room.ConfirmInteraction(this.GetEntityType());
+            }
         }
     }
 
@@ -100,17 +143,20 @@ public class Entity : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, 
 
     public Sprite Pick()
     {
-        if (IsPickable)
+        if (IsEnabledEntity())
         {
-            Sprite img = this.gameObject.transform.parent.GetComponent<Image>().sprite;
-            this.gameObject.transform.parent.gameObject.SetActive(false);
-            this.gameObject.SetActive(false);
-            return img;
+            if (IsPickable)
+            {
+                Sprite img = this.gameObject.transform.parent.GetComponent<Image>().sprite;
+                this.gameObject.transform.parent.gameObject.SetActive(false);
+                this.gameObject.SetActive(false);
+                return img;
+            }
+            else
+            {
+                Debug.LogError("PICKED NOT PICKABLE!!");
+            }
         }
-        else
-        {
-            Debug.LogError("PICKED NOT PICKABLE!!");
-            return null;
-        }
+        return null;
     }
 }

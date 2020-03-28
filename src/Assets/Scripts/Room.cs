@@ -73,5 +73,15 @@ public abstract class Room
         roomManager.StartTravel();
     }
 
+    public Entity GetEntityObject(EntityType entityType)
+    {
+        return roomManager.GetEntityObject(entityType);
+    }
+
+    public RoomOverlay GetRoomOverlay(OverlayType overlayType)
+    {
+        return roomManager.GetRoomOverlay(overlayType);
+    }
+
 }
 
