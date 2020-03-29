@@ -16,6 +16,14 @@ public class InventoryManager : MonoBehaviour
 
     List<InventoryObject> inventorySlots;
 
+    internal Sprite GetSpriteForActiveItem()
+    {
+        if (ActiveItem != EntityType.Unknown)
+            return m_SpriteDatabase[ActiveItem];
+
+        return null;
+    }
+
     InventoryObject activeObject = null;
 
     Dictionary<EntityType, Sprite> m_SpriteDatabase;
@@ -144,10 +152,11 @@ public class InventoryManager : MonoBehaviour
                 break;
         }
 
+        StartInteraction(inventoryObject);
 
         activeObject = inventoryObject;
-        InteractionText.text = GetDefaultActionInteractionText();
     }
+
 
     public string GetDefaultActionInteractionText()
     {
@@ -156,10 +165,21 @@ public class InventoryManager : MonoBehaviour
 
         switch (activeObject.GetEntityType())
         {
-            case EntityType.Lampadina:
-                return "Usa lampadina con...";
+            case EntityType.Olio:
+                return "Usa la bustina di olio con";
+            case EntityType.Lattuga:
+                return "Usa la lattuga con";
+            case EntityType.Aceto:
+                return "Usa la bustina di aceto con";
+            case EntityType.Bicarbonato:
+                return "Usa il bicarbonato di sodio con";
+            case EntityType.Chiave:
+                return "Usa la chiave con";
+            case EntityType.Calamaro:
+                return "Usa il calamaro con";
             default:
-                return "";
+                Utils.Error("<Manca il testo per {0}", activeObject.GetEntityType());
+                return string.Format("<Manca il testo per {0}", activeObject.GetEntityType());
         }
     }
 

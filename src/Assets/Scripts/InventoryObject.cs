@@ -10,11 +10,34 @@ public class InventoryObject : MonoBehaviour, IPointerEnterHandler, IPointerExit
     EntityType entity = EntityType.Unknown;
     public Image InventoryHighlight;
     public InventoryManager InventoryManager;
+    float m_AlphaTime = float.NaN;
 
     void Start()
     {
         InventoryHighlight.Shade(0, 1);
-        this.Shade(0);
+        this.Shade(1, 0);
+    }
+
+    void Update()
+    {
+        if (entity == EntityType.Unknown)
+        {
+            this.Shade(1, 0);
+        }
+        else if (InventoryManager.ActiveItem == entity)
+        {
+            if (float.IsNaN(m_AlphaTime))
+            {
+                m_AlphaTime = Time.time;
+            }
+
+            float alpha = Mathf.Cos(10f*(Time.time - m_AlphaTime)) * 0.5f + 0.5f;
+            this.Shade(1, alpha);
+        }
+        else
+        {
+            this.Shade(1);
+        }
     }
 
     internal void Assign(Sprite s, EntityType et)
@@ -41,7 +64,7 @@ public class InventoryObject : MonoBehaviour, IPointerEnterHandler, IPointerExit
     public void Clear()
     {
         InventoryHighlight.Shade(0, 1);
-        this.Shade(0);
+        this.Shade(1, 0);
         this.GetComponent<Image>().overrideSprite = null;
         entity = EntityType.Unknown;
     }

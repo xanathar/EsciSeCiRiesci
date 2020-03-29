@@ -40,6 +40,7 @@ public class Cucina : Room
             case EntityType.Frigorifero:
                 GetRoomOverlay(OverlayType.Frigorifero).OverlayOn();
                 Success();
+                Log("Ho aperto il frigorifero");
                 break;
             case EntityType.Bicarbonato:
                 Log("Ho preso il bicarbonato. Ha un sacco di usi, potrebbe tornare utile.");
@@ -151,7 +152,12 @@ public class Cucina : Room
                 Prompt("Prendi i guanti");
                 break;
             case EntityType.Lavandino:
-                Prompt("Stura lavandino otturato");
+                if (GameState.HasState(SpecialState.MessoBicarbonato))
+                    Prompt("Libera lavandino pieno di acqua sporca e bicarbonato");
+                else if (GameState.HasState(SpecialState.MessoAceto))
+                    Prompt("Libera lavandino pieno di acqua sporca e aceto");
+                else
+                    Prompt("Libera lavandino otturato");
                 break;
             case EntityType.Chiave:
                 Prompt("Prendi la chiave");
@@ -163,5 +169,40 @@ public class Cucina : Room
 
     public override void StartInventoryInteraction(EntityType inventory, EntityType e)
     {
+        string prompt = "";
+        switch (e)
+        {
+            case EntityType.Insalata:
+                prompt = ("l'insalata");
+                break;
+            case EntityType.Porta:
+                prompt = ("la porta");
+                break;
+            case EntityType.Frigorifero:
+                prompt = ("il frigorifero");
+                break;
+            case EntityType.Bicarbonato:
+                prompt = ("il bicarbonato di sodio");
+                break;
+            case EntityType.Calamaro:
+                prompt = ("il calamaro");
+                break;
+            case EntityType.Rubinetti:
+                prompt = ("i rubinetti");
+                break;
+            case EntityType.Guanti:
+                prompt = ("i guanti");
+                break;
+            case EntityType.Lavandino:
+                prompt = ("il lavandino otturato");
+                break;
+            case EntityType.Chiave:
+                prompt = ("la chiave");
+                break;
+            default:
+                break;
+        }
+
+        Prompt(GetDefaultPrompt() + " " + prompt);
     }
 }

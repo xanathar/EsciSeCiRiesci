@@ -69,6 +69,11 @@ public abstract class Room
         this.roomManager.InteractionText.text = string.Format(format, args);
     }
 
+    protected string GetDefaultPrompt()
+    {
+        return this.roomManager.Inventory.GetDefaultActionInteractionText();
+    }
+
     protected void ClearPrompt()
     {
         this.roomManager.InteractionText.text = this.roomManager.Inventory.GetDefaultActionInteractionText();

@@ -7,6 +7,11 @@ using UnityEngine.UI;
 
 public static class Utils
 {
+    public static void ShadeText(this Text go, float shade)
+    {
+        go.GetComponent<Text>().color = new Color(1, 1, 1, shade);
+    }
+
     public static void Shade(this Image go, float shade)
     {
         Shade(go, shade, shade, shade, shade);
