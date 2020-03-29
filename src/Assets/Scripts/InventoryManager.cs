@@ -94,32 +94,65 @@ public class InventoryManager : MonoBehaviour
             return;
         }
 
-        switch (inventoryObject.GetEntityType())
+        if (this.ActiveItem == EntityType.Unknown)
         {
-            case EntityType.Insalata:
-                InteractionText.text = "Usa vaschetta di insalata preconfezionata, marca 'Dammi Del Tu'.";
-                break;
-            case EntityType.Olio:
-                InteractionText.text = "Usa la bustina di olio extravergine di oliva.";
-                break;
-            case EntityType.Lattuga:
-                InteractionText.text = "Usa la lattuga.";
-                break;
-            case EntityType.Aceto:
-                InteractionText.text = "Usa la bustina di aceto.";
-                break;
-            case EntityType.Bicarbonato:
-                InteractionText.text = "Usa il bicarbonato di sodio.";
-                break;
-            case EntityType.Chiave:
-                InteractionText.text = "Usa la chiave.";
-                break;
-            case EntityType.Calamaro:
-                InteractionText.text = "Usa il... calamaro ?";
-                break;
-            default:
-                Utils.Error("Oggetto sconosciuto in inventario! {0}", inventoryObject.GetEntityType());
-                break;
+            switch (inventoryObject.GetEntityType())
+            {
+                case EntityType.Insalata:
+                    InteractionText.text = "Usa vaschetta di insalata preconfezionata, marca 'Dammi Del Tu'.";
+                    break;
+                case EntityType.Olio:
+                    InteractionText.text = "Usa la bustina di olio extravergine di oliva.";
+                    break;
+                case EntityType.Lattuga:
+                    InteractionText.text = "Usa la lattuga.";
+                    break;
+                case EntityType.Aceto:
+                    InteractionText.text = "Usa la bustina di aceto.";
+                    break;
+                case EntityType.Bicarbonato:
+                    InteractionText.text = "Usa il bicarbonato di sodio.";
+                    break;
+                case EntityType.Chiave:
+                    InteractionText.text = "Usa la chiave.";
+                    break;
+                case EntityType.Calamaro:
+                    InteractionText.text = "Usa il... calamaro ?";
+                    break;
+                default:
+                    Utils.Error("Oggetto sconosciuto in inventario! {0}", inventoryObject.GetEntityType());
+                    break;
+            }
+        }
+        else
+        {
+            switch (inventoryObject.GetEntityType())
+            {
+                case EntityType.Insalata:
+                    InteractionText.text = this.GetDefaultActionInteractionText() + " la vaschetta di insalata";
+                    break;
+                case EntityType.Olio:
+                    InteractionText.text = this.GetDefaultActionInteractionText() + " la bustina di olio";
+                    break;
+                case EntityType.Lattuga:
+                    InteractionText.text = this.GetDefaultActionInteractionText() + " la lattuga";
+                    break;
+                case EntityType.Aceto:
+                    InteractionText.text = this.GetDefaultActionInteractionText() + " la bustina di aceto";
+                    break;
+                case EntityType.Bicarbonato:
+                    InteractionText.text = this.GetDefaultActionInteractionText() + " il bicarbonato";
+                    break;
+                case EntityType.Chiave:
+                    InteractionText.text = this.GetDefaultActionInteractionText() + " la chiave";
+                    break;
+                case EntityType.Calamaro:
+                    InteractionText.text = this.GetDefaultActionInteractionText() + " il calamaro";
+                    break;
+                default:
+                    Utils.Error("Oggetto sconosciuto in inventario! {0}", inventoryObject.GetEntityType());
+                    break;
+            }
         }
     }
 
@@ -136,20 +169,37 @@ public class InventoryManager : MonoBehaviour
             return;
         }
 
-        switch (inventoryObject.GetEntityType())
+        if (this.ActiveItem != EntityType.Unknown)
         {
-            case EntityType.Insalata:
-                ActionLog.Log("Hai aperto la vaschetta di insalata.");
-                inventoryObject.Clear();
-                this.AddItem(EntityType.Olio);
-                this.AddItem(EntityType.Aceto);
-                this.AddItem(EntityType.Lattuga);
-                this.Backup();
-                GameState.Save();
-                InteractionText.text = "";
-                return;
-            default:
-                break;
+            if ((this.ActiveItem == EntityType.Olio || this.ActiveItem == EntityType.Aceto) && (inventoryObject.GetEntityType() == EntityType.Lattuga))
+            {
+                ActionLog.Log("Non voglio mangiarla, quindi non ha senso condirla.");
+            }
+            else
+            {
+                ActionLog.LogRandomFailure();
+            }
+
+            activeObject = null;
+            return;
+        }
+        else
+        {
+            switch (inventoryObject.GetEntityType())
+            {
+                case EntityType.Insalata:
+                    ActionLog.Log("Hai aperto la vaschetta di insalata.");
+                    inventoryObject.Clear();
+                    this.AddItem(EntityType.Olio);
+                    this.AddItem(EntityType.Aceto);
+                    this.AddItem(EntityType.Lattuga);
+                    this.Backup();
+                    GameState.Save();
+                    InteractionText.text = "";
+                    return;
+                default:
+                    break;
+            }
         }
 
         StartInteraction(inventoryObject);

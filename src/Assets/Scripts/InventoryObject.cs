@@ -11,6 +11,7 @@ public class InventoryObject : MonoBehaviour, IPointerEnterHandler, IPointerExit
     public Image InventoryHighlight;
     public InventoryManager InventoryManager;
     float m_AlphaTime = float.NaN;
+    bool lastCachedPositionInside = false;
 
     void Start()
     {
@@ -37,6 +38,7 @@ public class InventoryObject : MonoBehaviour, IPointerEnterHandler, IPointerExit
         else
         {
             this.Shade(1);
+            InventoryHighlight.Shade(lastCachedPositionInside ? 1 : 0, 1);
         }
     }
 
@@ -54,7 +56,8 @@ public class InventoryObject : MonoBehaviour, IPointerEnterHandler, IPointerExit
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (entity != EntityType.Unknown)
+        lastCachedPositionInside = true;
+        if (entity != EntityType.Unknown && InventoryManager.ActiveItem != entity)
         {
             InventoryHighlight.Shade(1, 1);
             InventoryManager.StartInteraction(this);
@@ -76,7 +79,9 @@ public class InventoryObject : MonoBehaviour, IPointerEnterHandler, IPointerExit
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (entity != EntityType.Unknown)
+        lastCachedPositionInside = false;
+
+        if (entity != EntityType.Unknown && InventoryManager.ActiveItem != entity)
         {
             InventoryHighlight.Shade(0, 1);
             InventoryManager.StopInteraction(this);

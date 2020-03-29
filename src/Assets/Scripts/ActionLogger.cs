@@ -8,11 +8,34 @@ public class ActionLogger : MonoBehaviour
 {
     string last = "";
     float lastUpdateTime = 0;
+    readonly System.Random rand = new System.Random();
 
     public void Log(string txt)
     {
         this.GetComponent<Text>().text = txt;
         lastUpdateTime = Time.time;
+    }
+
+    public void LogRandomFailure()
+    {
+        int r = this.rand.Next(4);
+
+        switch (r)
+        {
+            case 0:
+                this.Log("Non è una buona idea.");
+                break;
+            case 1:
+                this.Log("Uhm... no.");
+                break;
+            case 2:
+                this.Log("Non credo proprio.");
+                break;
+            default:
+                this.Log("Non ha molto senso.");
+                break;
+
+        }
     }
 
     private void Update()
