@@ -40,7 +40,9 @@ public class Entity : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, 
 
     public void DisableEntity()
     {
+        targetAlphaColor = 0f;
         this.Shade(0);
+        this.GetComponent<Image>().raycastTarget = false;
 
         if (highlight != null)
             highlight.Shade(0);
@@ -50,8 +52,12 @@ public class Entity : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, 
 
     public void EnableEntity()
     {
+        if (!m_Enabled)
+            targetAlphaColor = 0f;
+
         if (!m_PermanentDisabled)
         {
+            this.GetComponent<Image>().raycastTarget = true;
             this.Shade(1);
             highlight.Shade(1, 0);
             m_Enabled = true;

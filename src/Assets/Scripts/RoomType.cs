@@ -6,5 +6,7 @@
     BalconeCapra,
     Balcone,
     Camera,
-    Corridoio
+    Corridoio,
+    Computer,
+    Computer_Password
 }

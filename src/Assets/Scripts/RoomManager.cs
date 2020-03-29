@@ -40,6 +40,9 @@ public class RoomManager : MonoBehaviour
 
         InteractionText.text = "";
 
+        foreach (var ovl in m_Overlays.Values)
+            ovl.OverlayInit();
+
         m_Room.EnterRoom();
 
         StartCoroutine(FadeEnter());

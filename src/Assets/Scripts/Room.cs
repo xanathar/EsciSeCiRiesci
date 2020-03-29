@@ -11,6 +11,8 @@ public abstract class Room
     {
         yield return new Cucina();
         yield return new Corridoio();
+        yield return new Computer();
+        yield return new ComputerPassword();
     }
 
     private RoomManager roomManager;
@@ -70,6 +72,7 @@ public abstract class Room
     {
         GameState.CurrentRoom = rt;
         Inventory.Backup();
+
         roomManager.StartTravel();
     }
 
@@ -83,5 +86,9 @@ public abstract class Room
         return roomManager.GetRoomOverlay(overlayType);
     }
 
+    public void StartCoroutine(System.Collections.IEnumerator e)
+    {
+        roomManager.StartCoroutine(e);
+    }
 }
 

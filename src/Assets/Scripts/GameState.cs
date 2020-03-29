@@ -4,7 +4,7 @@ using UnityEngine;
 
 public static class GameState
 {
-    public static RoomType CurrentRoom = RoomType.Cucina;
+    public static RoomType CurrentRoom = RoomType.Computer;
     public static HashSet<EntityType> PickedEntities = new HashSet<EntityType>();
     public static List<EntityType> InventoryItems = new List<EntityType>();
 
