@@ -8,7 +8,8 @@ public enum OverlayType
     Computer_Documento,
     Computer_Errore_Inchiostro,
     Computer_Errore_Cestino,
-    Computer_BSOD
+    Computer_BSOD,
+    Melma,
 }
 
 public class RoomOverlay : MonoBehaviour

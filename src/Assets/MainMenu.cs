@@ -33,6 +33,7 @@ public class MainMenu : MonoBehaviour
 
         ButtonNewGame.OnClick(() =>
         {
+            this.GetComponent<AudioSource>().Play();
             if (GameState.HasSave())
             {
                 MenuGroup.SetActive(false);
@@ -47,30 +48,35 @@ public class MainMenu : MonoBehaviour
 
         ButtonLoadGame.OnClick(() =>
         {
+            this.GetComponent<AudioSource>().Play();
             GameState.Load();
             SceneManager.LoadScene("Adventure");
         });
 
         ButtonCredits.OnClick(() =>
         {
+            this.GetComponent<AudioSource>().Play();
             MenuGroup.SetActive(false);
             CreditsGroup.SetActive(true);
         });
 
         ButtonAlertYes.OnClick(() =>
         {
+            this.GetComponent<AudioSource>().Play();
             GameState.ResetNew();
             SceneManager.LoadScene("Adventure");
         });
 
         ButtonAlertNo.OnClick(() =>
         {
+            this.GetComponent<AudioSource>().Play();
             MenuGroup.SetActive(true);
             AlertGroup.SetActive(false);
         });
 
         ButtonCloseCredits.OnClick(() =>
         {
+            this.GetComponent<AudioSource>().Play();
             MenuGroup.SetActive(true);
             CreditsGroup.SetActive(false);
         });

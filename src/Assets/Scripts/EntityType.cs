@@ -12,17 +12,17 @@ public enum EntityType
     Porta,
     Lampadario,
 
-    Insalata,
+    Insalata,//.
     Lampadina,
 
     Scala,
-    Olio,
-    Aceto,
-    Lattuga,
-    Calamaro,
+    Olio,//.
+    Aceto,//.
+    Lattuga,//.
+    Calamaro,//.
     Forbici,
-    Chiave,
-    Bicarbonato,
+    Chiave,//
+    Bicarbonato,//.
     Password,
 
     Mascherina,
@@ -30,8 +30,8 @@ public enum EntityType
     Autocertificazione,
 
     Lavandino,
-    Rubinetti,
-    Frigorifero,
+    Rubinetti,//
+    Frigorifero,//
 
     Corridoio_Soggiorno,
     Corridoio_Cucina,
@@ -39,17 +39,17 @@ public enum EntityType
     Corridoio_Camera,
 
 
-    Computer_Cestino,
-    Computer_Folder,
-    Computer_Documento,
-    Computer_Esci,
+    Computer_Cestino,//.
+    Computer_Folder,//.
+    Computer_Documento,//.
+    Computer_Esci,//.
 
-    Computer_MsgBox_Ink_Ok,
-    Computer_MsgBox_Cestino_Ok,
-    Computer_Documento_Stampa,
-    Computer_Documento_Chiudi,
+    Computer_MsgBox_Ink_Ok,//.
+    Computer_MsgBox_Cestino_Ok,//.
+    Computer_Documento_Stampa,//.
+    Computer_Documento_Chiudi,//.
 
-    Computer_PasswordLock,
+    Computer_PasswordLock,//.
 }
 
 

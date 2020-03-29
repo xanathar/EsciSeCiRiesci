@@ -10,6 +10,7 @@ public class InventoryManager : MonoBehaviour
     const int EXPECTED_INVENTORY_SLOTS = 10;
 
     public Text InteractionText;
+    public ActionLogger ActionLog;
 
     public GameObject inventoryPlaceholderRoot;
 
@@ -85,14 +86,31 @@ public class InventoryManager : MonoBehaviour
             return;
         }
 
-
         switch (inventoryObject.GetEntityType())
         {
             case EntityType.Insalata:
                 InteractionText.text = "Usa vaschetta di insalata preconfezionata, marca 'Dammi Del Tu'.";
                 break;
+            case EntityType.Olio:
+                InteractionText.text = "Usa la bustina di olio extravergine di oliva.";
+                break;
+            case EntityType.Lattuga:
+                InteractionText.text = "Usa la lattuga.";
+                break;
+            case EntityType.Aceto:
+                InteractionText.text = "Usa la bustina di aceto.";
+                break;
+            case EntityType.Bicarbonato:
+                InteractionText.text = "Usa il bicarbonato di sodio.";
+                break;
+            case EntityType.Chiave:
+                InteractionText.text = "Usa la chiave.";
+                break;
+            case EntityType.Calamaro:
+                InteractionText.text = "Usa il... calamaro ?";
+                break;
             default:
-                Debug.LogError("Unknown entity!!");
+                Utils.Error("Oggetto sconosciuto in inventario! {0}", inventoryObject.GetEntityType());
                 break;
         }
     }
@@ -109,6 +127,23 @@ public class InventoryManager : MonoBehaviour
             InteractionText.text = "Non ha molto senso usare un oggetto qui";
             return;
         }
+
+        switch (inventoryObject.GetEntityType())
+        {
+            case EntityType.Insalata:
+                ActionLog.Log("Hai aperto la vaschetta di insalata.");
+                inventoryObject.Clear();
+                this.AddItem(EntityType.Olio);
+                this.AddItem(EntityType.Aceto);
+                this.AddItem(EntityType.Lattuga);
+                this.Backup();
+                GameState.Save();
+                InteractionText.text = "";
+                return;
+            default:
+                break;
+        }
+
 
         activeObject = inventoryObject;
         InteractionText.text = GetDefaultActionInteractionText();
@@ -135,6 +170,7 @@ public class InventoryManager : MonoBehaviour
             if (useUp)
             {
                 activeObject.Clear();
+                GameState.Save();
             }
 
             activeObject = null;

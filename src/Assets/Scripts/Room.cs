@@ -7,6 +7,8 @@ using UnityEngine.SceneManagement;
 
 public abstract class Room
 {
+    readonly System.Random rand = new System.Random();
+
     public static IEnumerable<Room> RoomLogicFactory()
     {
         yield return new Cucina();
@@ -42,7 +44,24 @@ public abstract class Room
 
     protected void LogRandomFailure()
     {
-        this.Log("Non ha molto senso.");
+        int r = this.rand.Next(4);
+
+        switch (r)
+        {
+            case 0:
+                this.Log("Non è una buona idea.");
+                break;
+            case 1:
+                this.Log("Uhm... no.");
+                break;
+            case 2:
+                this.Log("Non credo proprio.");
+                break;
+            default:
+                this.Log("Non ha molto senso.");
+                break;
+
+        }
     }
 
     protected void Prompt(string format, params object[] args)
@@ -97,6 +116,11 @@ public abstract class Room
     public void PlaySound(string clip)
     {
         roomManager.SoundFX.Play(clip);
+    }
+
+    public void Success()
+    {
+        PlaySound("success");
     }
 }
 

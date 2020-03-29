@@ -3,6 +3,15 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
+public enum SpecialState
+{
+    MessoBicarbonato,
+    MessoAceto,
+    RimossaMelma,
+
+}
+
+
 public static class GameState
 {
     public const RoomType START_ROOM = RoomType.Cucina;
@@ -10,6 +19,7 @@ public static class GameState
     private static RoomType m_CurrentRoom = START_ROOM;
     private static HashSet<EntityType> m_PickedEntities = new HashSet<EntityType>();
     public static List<EntityType> InventoryItems = new List<EntityType>();
+    private static HashSet<SpecialState> m_SpecialStates = new HashSet<SpecialState>();
 
     public static RoomType CurrentRoom
     {
@@ -22,6 +32,16 @@ public static class GameState
                 Save();
             }
         }
+    }
+
+    public static bool HasState(SpecialState s)
+    {
+        return m_SpecialStates.Contains(s);
+    }
+
+    public static void SetState(SpecialState s)
+    {
+        m_SpecialStates.Add(s);
     }
 
     public static bool HasPickedEntity(EntityType e)
@@ -43,10 +63,11 @@ public static class GameState
 
     public static void Save()
     {
-        string save = string.Format("{0}|{1}|{2}",
+        string save = string.Format("{0}|{1}|{2}|{3}",
             (int)m_CurrentRoom,
             string.Join(";", m_PickedEntities.Select(e => ((int)e).ToString()).ToArray()),
-            string.Join(";", InventoryItems.Select(e => ((int)e).ToString()).ToArray()));
+            string.Join(";", InventoryItems.Select(e => ((int)e).ToString()).ToArray()),
+            string.Join(";", m_SpecialStates.Select(e => ((int)e).ToString()).ToArray()));
 
         PlayerPrefs.SetString("savedata", save);
     }
@@ -60,11 +81,13 @@ public static class GameState
 
         m_PickedEntities.Clear();
         InventoryItems.Clear();
+        m_SpecialStates.Clear();
 
         string[] tokens = load.Split('|');
         m_CurrentRoom = (RoomType)(int.Parse(tokens[0]));
         m_PickedEntities.UnionWith(tokens[1].Split(';').Where(t => !string.IsNullOrEmpty(t)).Select(t => (EntityType)(int.Parse(t))));
         InventoryItems.AddRange(tokens[2].Split(';').Where(t => !string.IsNullOrEmpty(t)).Select(t => (EntityType)(int.Parse(t))));
+        m_SpecialStates.UnionWith(tokens[3].Split(';').Where(t => !string.IsNullOrEmpty(t)).Select(t => (SpecialState)(int.Parse(t))));
 
         return true;
     }
