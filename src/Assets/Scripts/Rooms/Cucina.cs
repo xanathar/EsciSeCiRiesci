@@ -54,7 +54,7 @@ public class Cucina : Room
                 if (!GameState.HasState(SpecialState.RimossaMelma))
                     Log("Ci manca solo aggiungere altra acqua!");
                 else
-                    Log("Non ho sete.");
+                    GetRoomOverlay(OverlayType.AcquaRubinetto).OverlayToggle();
                 break;
             case EntityType.Guanti:
                 Log("La confezione è sigillata e non riesco ad aprirla. Servirebbero delle forbici.");

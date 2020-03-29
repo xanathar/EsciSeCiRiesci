@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 public class ActionLogger : MonoBehaviour
 {
-    string last = "";
     float lastUpdateTime = 0;
     readonly System.Random rand = new System.Random();
 
