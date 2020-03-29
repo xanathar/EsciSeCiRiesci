@@ -12,6 +12,7 @@ public class RoomManager : MonoBehaviour
     public ActionLogger ActionLog;
     public InventoryManager Inventory;
     public Image TravelFader;
+    public SoundFX SoundFX;
 
     Room m_Room;
     RoomMarker m_RoomMarker;

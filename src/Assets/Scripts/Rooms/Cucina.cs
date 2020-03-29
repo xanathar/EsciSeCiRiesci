@@ -35,7 +35,7 @@ public class Cucina : Room
         if (e == EntityType.Frigorifero)
         {
             GetRoomOverlay(OverlayType.Frigorifero).OverlayOn();
-            GetEntityObject(EntityType.Insalata).EnableEntity();
+            PlaySound("success");
         }
     }
 

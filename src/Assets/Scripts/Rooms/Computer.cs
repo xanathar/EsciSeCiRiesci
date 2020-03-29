@@ -23,6 +23,7 @@ class Computer : Room
         switch (e) 
         {
             case EntityType.Computer_Cestino:
+                PlaySound("error");
                 GetRoomOverlay(OverlayType.Computer_Errore_Cestino).OverlayOn();
                 break;
             case EntityType.Computer_MsgBox_Cestino_Ok:
@@ -34,6 +35,7 @@ class Computer : Room
             case EntityType.Computer_Documento_Stampa:
                 GetRoomOverlay(OverlayType.Computer_Documento).OverlayOff();
                 GetRoomOverlay(OverlayType.Computer_Errore_Inchiostro).OverlayOn();
+                PlaySound("error");
                 break;
             case EntityType.Computer_Documento_Chiudi:
                 GetRoomOverlay(OverlayType.Computer_Documento).OverlayOff();
@@ -44,6 +46,7 @@ class Computer : Room
             case EntityType.Computer_Folder:
                 GetRoomOverlay(OverlayType.Computer_BSOD).OverlayOn();
                 StartCoroutine(BSOD());
+                PlaySound("error");
                 break;
         }
     }
@@ -61,6 +64,7 @@ class Computer : Room
 
     public override void EnterRoom()
     {
+        PlaySound("login");
     }
 
     public override RoomType GetRoomType()

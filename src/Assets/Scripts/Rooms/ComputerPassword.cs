@@ -8,6 +8,7 @@ class ComputerPassword: Room
     public override IEnumerable<EntityType> AcceptedEntities()
     {
         yield return EntityType.Computer_Esci;
+        yield return EntityType.Computer_PasswordLock;
     }
 
     public override void ConfirmInteraction(EntityType e)

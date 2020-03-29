@@ -85,7 +85,7 @@ public class InventoryManager : MonoBehaviour
 
     internal void StartInteraction(InventoryObject inventoryObject)
     {
-        if (GameState.CurrentRoom == RoomType.Corridoio)
+        if (GameState.CurrentRoom == RoomType.Corridoio || GameState.CurrentRoom == RoomType.Computer)
         {
             InteractionText.text = "Non ha molto senso usare un oggetto qui";
             return;
@@ -110,7 +110,7 @@ public class InventoryManager : MonoBehaviour
 
     internal void CommitInteraction(InventoryObject inventoryObject)
     {
-        if (GameState.CurrentRoom == RoomType.Corridoio)
+        if (GameState.CurrentRoom == RoomType.Corridoio || GameState.CurrentRoom == RoomType.Computer)
         {
             InteractionText.text = "Non ha molto senso usare un oggetto qui";
             return;

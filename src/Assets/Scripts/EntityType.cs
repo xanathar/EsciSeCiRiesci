@@ -48,6 +48,8 @@ public enum EntityType
     Computer_MsgBox_Cestino_Ok,
     Computer_Documento_Stampa,
     Computer_Documento_Chiudi,
+
+    Computer_PasswordLock,
 }
 
 

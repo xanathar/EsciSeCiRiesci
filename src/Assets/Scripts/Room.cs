@@ -65,6 +65,7 @@ public abstract class Room
         Inventory.AddItem(e);
         GameState.PickedEntities.Add(e);
         roomManager.GetEntityObject(e).DisableEntityPermanently();
+        PlaySound("success");
         ClearPrompt();
     }
 
@@ -89,6 +90,11 @@ public abstract class Room
     public void StartCoroutine(System.Collections.IEnumerator e)
     {
         roomManager.StartCoroutine(e);
+    }
+
+    public void PlaySound(string clip)
+    {
+        roomManager.SoundFX.Play(clip);
     }
 }
 
