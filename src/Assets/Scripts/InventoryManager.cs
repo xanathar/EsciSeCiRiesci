@@ -50,8 +50,6 @@ public class InventoryManager : MonoBehaviour
 
         for (int i = 0; i < inventorySlots.Count; i++)
             GameState.InventoryItems.Add(inventorySlots[i].GetEntityType());
-
-        GameState.Save();
     }
 
     private void Restore()
@@ -64,8 +62,6 @@ public class InventoryManager : MonoBehaviour
             if (ii != EntityType.Unknown)
                 AddItem(ii);
         }
-
-        GameState.Save();
     }
 
 

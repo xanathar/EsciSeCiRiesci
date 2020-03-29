@@ -11,7 +11,6 @@ public static class GameState
     private static HashSet<EntityType> m_PickedEntities = new HashSet<EntityType>();
     public static List<EntityType> InventoryItems = new List<EntityType>();
 
-
     public static RoomType CurrentRoom
     {
         get { return m_CurrentRoom; }
@@ -33,7 +32,6 @@ public static class GameState
     public static void AddPickedEntity(EntityType e)
     {
         m_PickedEntities.Add(e);
-        Save();
     }
 
     public static void ResetNew()
@@ -65,8 +63,8 @@ public static class GameState
 
         string[] tokens = load.Split('|');
         m_CurrentRoom = (RoomType)(int.Parse(tokens[0]));
-        m_PickedEntities.UnionWith(tokens[1].Split(';').Select(t => (EntityType)(int.Parse(t))));
-        InventoryItems.AddRange(tokens[2].Split(';').Select(t => (EntityType)(int.Parse(t))));
+        m_PickedEntities.UnionWith(tokens[1].Split(';').Where(t => !string.IsNullOrEmpty(t)).Select(t => (EntityType)(int.Parse(t))));
+        InventoryItems.AddRange(tokens[2].Split(';').Where(t => !string.IsNullOrEmpty(t)).Select(t => (EntityType)(int.Parse(t))));
 
         return true;
     }

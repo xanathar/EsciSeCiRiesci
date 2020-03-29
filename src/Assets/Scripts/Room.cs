@@ -67,6 +67,8 @@ public abstract class Room
         roomManager.GetEntityObject(e).DisableEntityPermanently();
         PlaySound("success");
         ClearPrompt();
+        roomManager.Inventory.Backup();
+        GameState.Save();
     }
 
     protected void Travel(RoomType rt)

@@ -47,6 +47,7 @@ public class RoomManager : MonoBehaviour
         m_Room.EnterRoom();
 
         StartCoroutine(FadeEnter());
+        GameState.Save();
     }
 
     public bool InteractionsEnabled = true;
