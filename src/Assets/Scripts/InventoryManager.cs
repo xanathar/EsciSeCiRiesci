@@ -240,6 +240,7 @@ public class InventoryManager : MonoBehaviour
             if (useUp)
             {
                 activeObject.Clear();
+                Backup();
                 GameState.Save();
             }
 

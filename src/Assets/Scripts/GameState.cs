@@ -104,15 +104,9 @@ public static class GameState
 
         sb.AppendLine("Current room = " + m_CurrentRoom.ToString());
 
-        sb.AppendLine("Picked entities:");
-
-        foreach (var ee in m_PickedEntities)
-            sb.AppendLine("\t" + ee.ToString());
-
-        sb.AppendLine("Inventory items:");
-
-        foreach (var ee in InventoryItems)
-            sb.AppendLine("\t" + ee.ToString());
+        sb.AppendLine("Picked entities: " + string.Join(",", m_PickedEntities.Select(e => e.ToString()).ToArray()));
+        sb.AppendLine("Inventory items: " + string.Join(",", InventoryItems.Select(e => e.ToString()).ToArray()));
+        sb.AppendLine("Special states: " + string.Join(",", m_SpecialStates.Select(e => e.ToString()).ToArray()));
 
         Debug.Log(sb.ToString());
     }
