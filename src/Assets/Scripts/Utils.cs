@@ -37,6 +37,12 @@ public static class Utils
         go.GetComponent<Image>().color = new Color(r, g, b, a);
     }
 
+    public static void OnClick(this Button btn, Action callback)
+    {
+        btn.onClick = new Button.ButtonClickedEvent();
+        btn.onClick.AddListener(() => callback());
+    }
+
     public static void Fail()
     {
 #if UNITY_EDITOR

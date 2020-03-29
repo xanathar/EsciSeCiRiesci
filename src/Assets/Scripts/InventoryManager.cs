@@ -51,8 +51,7 @@ public class InventoryManager : MonoBehaviour
         for (int i = 0; i < inventorySlots.Count; i++)
             GameState.InventoryItems.Add(inventorySlots[i].GetEntityType());
 
-        Debug.LogFormat("Backup'd {0} inventory items", GameState.InventoryItems.Count);
-        GameState.Dump();
+        GameState.Save();
     }
 
     private void Restore()
@@ -66,8 +65,7 @@ public class InventoryManager : MonoBehaviour
                 AddItem(ii);
         }
 
-        Debug.LogFormat("Restored {0} inventory items", GameState.InventoryItems.Count);
-        GameState.Dump();
+        GameState.Save();
     }
 
 

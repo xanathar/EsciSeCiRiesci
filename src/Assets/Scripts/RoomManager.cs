@@ -88,7 +88,7 @@ public class RoomManager : MonoBehaviour
             if (!acceptedEntities.Contains(et))
                 Debug.LogErrorFormat("Entity {0} not supported by room {1}", et, m_Room.GetRoomType());
 
-            if (GameState.PickedEntities.Contains(et))
+            if (GameState.HasPickedEntity(et))
             {
                 e.DisableEntityPermanently();
             }

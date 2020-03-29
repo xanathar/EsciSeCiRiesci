@@ -63,7 +63,7 @@ public abstract class Room
     protected void PickEntity(EntityType e)
     {
         Inventory.AddItem(e);
-        GameState.PickedEntities.Add(e);
+        GameState.AddPickedEntity(e);
         roomManager.GetEntityObject(e).DisableEntityPermanently();
         PlaySound("success");
         ClearPrompt();
