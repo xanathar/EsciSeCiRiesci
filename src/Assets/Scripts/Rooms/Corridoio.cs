@@ -41,7 +41,7 @@ public class Corridoio : Room
 
     public override void EnterRoom()
     {
-        Log("Scegli dove andare");
+        LogRoom("welcome");
     }
 
     public override RoomType GetRoomType()

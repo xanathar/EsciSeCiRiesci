@@ -90,69 +90,17 @@ public class InventoryManager : MonoBehaviour
     {
         if (GameState.CurrentRoom == RoomType.Corridoio || GameState.CurrentRoom == RoomType.Computer)
         {
-            InteractionText.text = "Non ha molto senso usare un oggetto qui";
+            InteractionText.text = Texts.Get("inventario_disabilitato");
             return;
         }
 
         if (this.ActiveItem == EntityType.Unknown)
         {
-            switch (inventoryObject.GetEntityType())
-            {
-                case EntityType.Insalata:
-                    InteractionText.text = "Usa vaschetta di insalata preconfezionata, marca 'Dammi Del Tu'.";
-                    break;
-                case EntityType.Olio:
-                    InteractionText.text = "Usa la bustina di olio extravergine di oliva.";
-                    break;
-                case EntityType.Lattuga:
-                    InteractionText.text = "Usa la lattuga.";
-                    break;
-                case EntityType.Aceto:
-                    InteractionText.text = "Usa la bustina di aceto.";
-                    break;
-                case EntityType.Bicarbonato:
-                    InteractionText.text = "Usa il bicarbonato di sodio.";
-                    break;
-                case EntityType.Chiave:
-                    InteractionText.text = "Usa la chiave.";
-                    break;
-                case EntityType.Calamaro:
-                    InteractionText.text = "Usa il... calamaro ?";
-                    break;
-                default:
-                    Utils.Error("Oggetto sconosciuto in inventario! {0}", inventoryObject.GetEntityType());
-                    break;
-            }
+            InteractionText.text = Texts.GetEntityText(EntityTextType.Inventario_Usa, inventoryObject.GetEntityType());
         }
         else
         {
-            switch (inventoryObject.GetEntityType())
-            {
-                case EntityType.Insalata:
-                    InteractionText.text = this.GetDefaultActionInteractionText() + " la vaschetta di insalata";
-                    break;
-                case EntityType.Olio:
-                    InteractionText.text = this.GetDefaultActionInteractionText() + " la bustina di olio";
-                    break;
-                case EntityType.Lattuga:
-                    InteractionText.text = this.GetDefaultActionInteractionText() + " la lattuga";
-                    break;
-                case EntityType.Aceto:
-                    InteractionText.text = this.GetDefaultActionInteractionText() + " la bustina di aceto";
-                    break;
-                case EntityType.Bicarbonato:
-                    InteractionText.text = this.GetDefaultActionInteractionText() + " il bicarbonato";
-                    break;
-                case EntityType.Chiave:
-                    InteractionText.text = this.GetDefaultActionInteractionText() + " la chiave";
-                    break;
-                case EntityType.Calamaro:
-                    InteractionText.text = this.GetDefaultActionInteractionText() + " il calamaro";
-                    break;
-                default:
-                    Utils.Error("Oggetto sconosciuto in inventario! {0}", inventoryObject.GetEntityType());
-                    break;
-            }
+            InteractionText.text = this.GetDefaultActionInteractionText() + Texts.GetEntityText(EntityTextType.Inventario_Complemento, inventoryObject.GetEntityType());
         }
     }
 
@@ -165,7 +113,7 @@ public class InventoryManager : MonoBehaviour
     {
         if (GameState.CurrentRoom == RoomType.Corridoio || GameState.CurrentRoom == RoomType.Computer)
         {
-            InteractionText.text = "Non ha molto senso usare un oggetto qui";
+            InteractionText.text = Texts.Get("inventario_disabilitato");
             return;
         }
 
@@ -173,7 +121,7 @@ public class InventoryManager : MonoBehaviour
         {
             if ((this.ActiveItem == EntityType.Olio || this.ActiveItem == EntityType.Aceto) && (inventoryObject.GetEntityType() == EntityType.Lattuga))
             {
-                ActionLog.Log("Non voglio mangiarla, quindi non ha senso condirla.");
+                ActionLog.Log(Texts.Get("insalata_nocondimento"));
             }
             else
             {
@@ -188,7 +136,7 @@ public class InventoryManager : MonoBehaviour
             switch (inventoryObject.GetEntityType())
             {
                 case EntityType.Insalata:
-                    ActionLog.Log("Hai aperto la vaschetta di insalata.");
+                    ActionLog.Log(Texts.Get("insalata_aperta"));
                     inventoryObject.Clear();
                     this.AddItem(EntityType.Olio);
                     this.AddItem(EntityType.Aceto);
@@ -213,24 +161,7 @@ public class InventoryManager : MonoBehaviour
         if (activeObject == null)
             return "";
 
-        switch (activeObject.GetEntityType())
-        {
-            case EntityType.Olio:
-                return "Usa la bustina di olio con";
-            case EntityType.Lattuga:
-                return "Usa la lattuga con";
-            case EntityType.Aceto:
-                return "Usa la bustina di aceto con";
-            case EntityType.Bicarbonato:
-                return "Usa il bicarbonato di sodio con";
-            case EntityType.Chiave:
-                return "Usa la chiave con";
-            case EntityType.Calamaro:
-                return "Usa il calamaro con";
-            default:
-                Utils.Error("<Manca il testo per {0}", activeObject.GetEntityType());
-                return string.Format("<Manca il testo per {0}", activeObject.GetEntityType());
-        }
+        return Texts.GetEntityText(EntityTextType.Inventario_Soggetto, activeObject.GetEntityType());
     }
 
     public void ClearActiveObject(bool useUp)
@@ -260,20 +191,4 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    public string InventoryShortName
-    {
-        get
-        {
-            if (activeObject == null)
-                return "";
-
-            switch (activeObject.GetEntityType())
-            {
-                case EntityType.Lampadina:
-                    return "la lampadina";
-                default:
-                    return "";
-            }
-        }
-    }
 }

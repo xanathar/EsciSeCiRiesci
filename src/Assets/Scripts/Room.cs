@@ -35,6 +35,11 @@ public abstract class Room
         this.roomManager = roomManager;
     }
 
+    protected void LogRoom(string key)
+    {
+        Log(Texts.GetRoomText(this.GetRoomType(), key));
+    }
+
     protected void Log(string format, params object[] args)
     {
         this.roomManager.ActionLog.Log(string.Format(format, args));
@@ -48,6 +53,11 @@ public abstract class Room
     protected void Prompt(string format, params object[] args)
     {
         this.roomManager.InteractionText.text = string.Format(format, args);
+    }
+
+    protected void PromptRoom(string key)
+    {
+        this.roomManager.InteractionText.text = Texts.GetRoomText(this.GetRoomType(), key);
     }
 
     protected string GetDefaultPrompt()
@@ -74,6 +84,7 @@ public abstract class Room
         ClearPrompt();
         roomManager.Inventory.Backup();
         GameState.Save();
+        Log(Texts.GetEntityText(EntityTextType.Inventario_Prendi, e));
     }
 
     protected void Travel(RoomType rt)

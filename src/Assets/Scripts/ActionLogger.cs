@@ -22,16 +22,16 @@ public class ActionLogger : MonoBehaviour
         switch (r)
         {
             case 0:
-                this.Log("Non è una buona idea.");
+                this.Log(Texts.Get("fail_1"));
                 break;
             case 1:
-                this.Log("Uhm... no.");
+                this.Log(Texts.Get("fail_2"));
                 break;
             case 2:
-                this.Log("Non credo proprio.");
+                this.Log(Texts.Get("fail_3"));
                 break;
             default:
-                this.Log("Non ha molto senso.");
+                this.Log(Texts.Get("fail_4"));
                 break;
 
         }
