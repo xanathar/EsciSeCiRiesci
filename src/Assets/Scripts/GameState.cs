@@ -6,7 +6,7 @@ using UnityEngine;
 
 public static class GameState
 {
-    public const RoomType START_ROOM = RoomType.Balcone;
+    public const RoomType START_ROOM = RoomType.Soggiorno;
 
     private static RoomType m_CurrentRoom = START_ROOM;
     private static HashSet<EntityType> m_PickedEntities = new HashSet<EntityType>();
@@ -55,18 +55,24 @@ public static class GameState
 
     public static void Save()
     {
-        string save = string.Format("{0}|{1}|{2}|{3}",
-            (int)m_CurrentRoom,
-            string.Join(";", m_PickedEntities.Select(e => ((int)e).ToString()).ToArray()),
-            string.Join(";", InventoryItems.Select(e => ((int)e).ToString()).ToArray()),
-            string.Join(";", m_SpecialStates.Select(e => ((int)e).ToString()).ToArray()));
+        I64StreamEncoder enc = new I64StreamEncoder();
+
+        enc.Append((long)m_CurrentRoom);
+        enc.AppendChunk(m_PickedEntities.Select(e => (long)e));
+        enc.AppendChunk(InventoryItems.Select(e => (long)e));
+        enc.AppendChunk(m_SpecialStates.Select(e => (long)e));
+
+        string save = enc.ToString();
 
         PlayerPrefs.SetString("savedata", save);
+        Debug.Log("Loaded data : " + save);
     }
 
     public static bool Load()
     {
         string load = PlayerPrefs.GetString("savedata", null);
+
+        Debug.Log("Loaded data : " + load);
 
         if (load == null)
             return false;
@@ -75,11 +81,12 @@ public static class GameState
         InventoryItems.Clear();
         m_SpecialStates.Clear();
 
-        string[] tokens = load.Split('|');
-        m_CurrentRoom = (RoomType)(int.Parse(tokens[0]));
-        m_PickedEntities.UnionWith(tokens[1].Split(';').Where(t => !string.IsNullOrEmpty(t)).Select(t => (EntityType)(int.Parse(t))));
-        InventoryItems.AddRange(tokens[2].Split(';').Where(t => !string.IsNullOrEmpty(t)).Select(t => (EntityType)(int.Parse(t))));
-        m_SpecialStates.UnionWith(tokens[3].Split(';').Where(t => !string.IsNullOrEmpty(t)).Select(t => (SpecialState)(int.Parse(t))));
+        I64StreamDecoder dec = new I64StreamDecoder(load);
+
+        m_CurrentRoom = (RoomType)dec.DecodeNext().Value;
+        m_PickedEntities.UnionWith(dec.DecodeChunk().Select(v => (EntityType)v));
+        InventoryItems.AddRange(dec.DecodeChunk().Select(v => (EntityType)v));
+        m_SpecialStates.UnionWith(dec.DecodeChunk().Select(v => (SpecialState)v));
 
         return true;
     }
