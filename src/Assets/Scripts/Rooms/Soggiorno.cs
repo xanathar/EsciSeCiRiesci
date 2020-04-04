@@ -59,7 +59,10 @@ public class Soggiorno : Room
                 }
                 break;
             case EntityType.Quadro_3:
-                GetRoomOverlay(OverlayType.Quadro).OverlayOn();
+                if (GameState.HasPickedEntity(EntityType.Password))
+                    LogEntity(EntityTextType.ConfermaInterazione, e);
+                else
+                    GetRoomOverlay(OverlayType.Quadro).OverlayOn();
                 break;
             default:
                 LogEntity(EntityTextType.ConfermaInterazione, e);

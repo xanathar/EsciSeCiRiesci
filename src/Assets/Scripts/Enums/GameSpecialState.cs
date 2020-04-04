@@ -6,5 +6,8 @@ public enum SpecialState
     RimossaMelma,
     AcquaLavata,
     CucinaIlluminata,
+    CapraRuminante,
+    ArmadiettoAperto,
+    ScalaOliata,
 }
 

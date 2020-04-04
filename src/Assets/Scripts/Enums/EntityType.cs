@@ -56,6 +56,9 @@
     Penne,
     PupazzoPrincipe,
     PupazzoSirenetta,
+    Capra,
+    CapraRuminante,
+    Serratura,
 }
 
 

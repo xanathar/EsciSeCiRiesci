@@ -20,13 +20,6 @@ public class Entity : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, 
     private bool m_PermanentDisabled = false;
     private bool m_StateChecked = false;
 
-    private void Awake()
-    {
-        //this.Shade(1);
-        targetAlphaColor = 0f;
-        currentAlphaColor = 0f;
-    }
-
     public bool IsEnabledEntity()
     {
         return (!m_PermanentDisabled) && m_Enabled && (m_RoomManager == null || m_RoomManager.InteractionsEnabled);
@@ -64,13 +57,20 @@ public class Entity : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, 
         }
     }
 
-    private void Start()
+    private void Awake()
     {
         if (highlight == null)
             highlight = this.GetComponent<Image>();
 
+        targetAlphaColor = 0f;
+        currentAlphaColor = 0f;
+    }
+
+    private void Start()
+    {
         highlight.Shade(1, 0);
     }
+
 
     private void Update()
     {

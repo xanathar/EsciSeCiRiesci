@@ -9,5 +9,9 @@ public enum OverlayType
     Melma,
     AcquaRubinetto,
     Quadro,
+    ArmadiettoBalcone,
+    Capra,
+    CapraRuminante,
+
 }
 

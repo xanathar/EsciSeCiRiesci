@@ -27,6 +27,18 @@ public static class Utils
         go.GetComponent<Image>().color = new Color(r, g, b, a);
     }
 
+    public static string GetObjectPath(this GameObject rt)
+    {
+        string name = "";
+
+        while (rt != null)
+        {
+            name = "/" + rt.name + name;
+            rt = (rt.transform.parent != null) ? rt.transform.parent.gameObject : null;
+        }
+        return name;
+    }
+
     public static void Shade(this MonoBehaviour go, float shade)
     {
         Shade(go, shade, shade, shade, shade);

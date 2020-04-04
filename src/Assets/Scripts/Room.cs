@@ -13,6 +13,7 @@ public abstract class Room
         yield return new Cucina();
         yield return new Corridoio();
         yield return new Soggiorno();
+        yield return new Balcone();
         yield return new Computer();
         yield return new ComputerPassword();
     }

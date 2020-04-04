@@ -31,6 +31,8 @@ class Ita
             { EntityType.Calamaro, "Usa il... calamaro ?" },
             { EntityType.Lampadina, "Usa la lampadina." },
             { EntityType.Password, "Usa la segretissima password." },
+            { EntityType.Forbici, "Usa le forbici" },
+            { EntityType.Scala, "Usa la scala" },
         });
 
         entity_texts.Add(EntityTextType.Inventario_Complemento, new Dictionary<EntityType, string>()
@@ -45,6 +47,8 @@ class Ita
             { EntityType.Calamaro, " il calamaro" },
             { EntityType.Guanti, "i guanti" },
             { EntityType.Password, "il foglietto con la password." },
+            { EntityType.Forbici, "le forbici" },
+            { EntityType.Scala, "la scala" },
 
             // cucina
             { EntityType.Lampadario, "il lampadario" },
@@ -67,6 +71,11 @@ class Ita
             { EntityType.Penne, "le penne" },
             { EntityType.PupazzoPrincipe, "il pupazzo del principe" },
             { EntityType.PupazzoSirenetta, "il pupazzo della sirenetta" },
+
+            // balcone
+            { EntityType.Serratura, "la serratura" },
+            { EntityType.Capra, "la capra affamata" },
+            { EntityType.CapraRuminante, "la capra" },
         });
 
         entity_texts.Add(EntityTextType.Inventario_Soggetto, new Dictionary<EntityType, string>()
@@ -80,6 +89,8 @@ class Ita
             { EntityType.Calamaro, "Usa il calamaro con" },
             { EntityType.Lampadina, "Usa la lampadina con" },
             { EntityType.Password, "Usa la segretissima password con" },
+            { EntityType.Forbici, "Usa le forbici con" },
+            { EntityType.Scala, "Usa la scala con" },
         });
 
         entity_texts.Add(EntityTextType.Inventario_Preso, new Dictionary<EntityType, string>()
@@ -93,12 +104,14 @@ class Ita
             { EntityType.Chiave, "Ho preso la chiave." },
             { EntityType.Lampadina, "Ho preso la lampadina." },
             { EntityType.Password, "Ho preso il foglietto. Sopra c'è scritto 'password'." },
+            { EntityType.Forbici, "Ho preso le forbici." },
+            { EntityType.Scala, "Ho preso la scala." },
         });
 
         entity_texts.Add(EntityTextType.Interagisci, new Dictionary<EntityType, string>()
         {
             { EntityType.Insalata, "Prendi l'insalata" },
-            { EntityType.Porta, "Esci da questa stanza" },
+            { EntityType.Porta, "Vai in un'altra stanza" },
             { EntityType.Frigorifero, "Apri il frigorifero" },
             { EntityType.Bicarbonato, "Prendi il bicarbonato di sodio" },
             { EntityType.Calamaro, "Prendi il calamaro" },
@@ -122,6 +135,13 @@ class Ita
             { EntityType.Penne, "Prendi le penne" },
             { EntityType.PupazzoPrincipe, "Prendi il pupazzo del principe" },
             { EntityType.PupazzoSirenetta, "Prendi il pupazzo della sirenetta" },
+
+            { EntityType.Forbici, "Prendi le forbici." },
+            { EntityType.Serratura, "L'armadietto è chiuso a chiave." },
+            { EntityType.Scala, "Prendi la scala." },
+            { EntityType.Capra, "La capra ha fame e non mi lascia passare." },
+            { EntityType.CapraRuminante, "Ora la capretta mangia serena." },
+
         });
 
         entity_texts.Add(EntityTextType.ConfermaInterazione, new Dictionary<EntityType, string>()
@@ -129,6 +149,7 @@ class Ita
             // todo v
             { EntityType.Quadro_1, "E' un quadro con due persone che non rispettano il metro di distanza" },
             { EntityType.Quadro_2, "E' un quadro con dei fiori disegnati. E polline. Tanto polline." },
+            { EntityType.Quadro_3, "Non c'è più niente dietro al quadro della principessa." },
             { EntityType.Finestra, "Non ci penso proprio con quel coso che mi aspetta lì fuori!!" },
             { EntityType.Telefono, "Non saprei a chi telefonare" },
             { EntityType.Fiori, "Sono fiori finti, e non saprei cosa farmene." },
@@ -137,6 +158,10 @@ class Ita
             { EntityType.Penne, "Non serve che le prenda, ne ho sempre una in tasca." },
             { EntityType.PupazzoPrincipe, "E' un principe e di azzurro ha solo i pantaloni." },
             { EntityType.PupazzoSirenetta, "Ha gli occhi da pesce lesso." },
+            { EntityType.Serratura, "L'armadietto è chiuso a chiave." },
+            { EntityType.Scala, "La capra ha fame e non mi lascia prendere la scala." },
+            { EntityType.Capra, "La capra ha fame e non mi lascia passare." },
+            { EntityType.CapraRuminante, "Ora la capretta mangia serena." },
         });
 
 
@@ -192,12 +217,21 @@ class Ita
             { "uscita", "Non posso uscire. Mi servono mascherina, guanti e autocertificazione." },
             { "uscitam", "Non posso uscire. Mi servono ancora guanti e autocertificazione." },
             { "uscitag", "Non posso uscire. Mi servono ancora mascherina e autocertificazione." },
-            { "uscitaa", "Non posso uscire. Mi serve ancora l'autocertificazione." },
+            { "uscitaa", "Non posso uscire. Mi servono ancora guanti e mascherina." },
             { "uscitagm", "Non posso uscire. Mi serve ancora l'autocertificazione." },
             { "uscitaam", "Non posso uscire. Mi servono ancora i guanti." },
             { "uscitaag", "Non posso uscire. Mi serve ancora la mascherina." },
         });
 
+        rooms_texts.Add(RoomType.Balcone, new Dictionary<string, string>()
+        {
+            { "welcome", "Sei sul balcone. La capra sta ruminando serena." },
+            { "welcome_capra", "Sei sul balcone e una capra affamata ti blocca la strada" },
+            { "kill_capra", "Siamo diventati matti?! Povera capra!" },
+            { "scala_ruggine", "La scala è arrugginita e non riesco a chiuderla" },
+            { "scala_olio", "Ora dovrei riuscire a chiudere la scala" },
+            { "fail_capra", "Non posso, la capra mi blocca la strada" },
+        });
     }
 }
 

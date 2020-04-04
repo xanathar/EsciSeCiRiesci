@@ -3,7 +3,7 @@
     Soggiorno,
     CucinaBuia,
     Cucina,
-    BalconeCapra,
+    NonUsatoNonUsatoNonUsato,
     Balcone,
     Camera,
     Corridoio,
