@@ -9,8 +9,10 @@ public abstract class Room
 {
     public static IEnumerable<Room> RoomLogicFactory()
     {
+        yield return new CucinaBuia();
         yield return new Cucina();
         yield return new Corridoio();
+        yield return new Soggiorno();
         yield return new Computer();
         yield return new ComputerPassword();
     }
@@ -40,9 +42,14 @@ public abstract class Room
         Log(Texts.GetRoomText(this.GetRoomType(), key));
     }
 
-    protected void Log(string format, params object[] args)
+    protected void LogEntity(EntityTextType ett, EntityType e)
     {
-        this.roomManager.ActionLog.Log(string.Format(format, args));
+        Log(Texts.GetEntityText(ett, e));
+    }
+
+    private void Log(string format)
+    {
+        this.roomManager.ActionLog.Log(format);
     }
 
     protected void LogRandomFailure()
@@ -58,6 +65,11 @@ public abstract class Room
     protected void PromptRoom(string key)
     {
         this.roomManager.InteractionText.text = Texts.GetRoomText(this.GetRoomType(), key);
+    }
+
+    protected void PromptEntity(EntityTextType ett, EntityType e)
+    {
+        this.roomManager.InteractionText.text = Texts.GetEntityText(ett, e);
     }
 
     protected string GetDefaultPrompt()
@@ -84,7 +96,7 @@ public abstract class Room
         ClearPrompt();
         roomManager.Inventory.Backup();
         GameState.Save();
-        Log(Texts.GetEntityText(EntityTextType.Inventario_Prendi, e));
+        Log(Texts.GetEntityText(EntityTextType.Inventario_Preso, e));
     }
 
     protected void Travel(RoomType rt)

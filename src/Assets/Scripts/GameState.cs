@@ -3,18 +3,10 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-public enum SpecialState
-{
-    MessoBicarbonato,
-    MessoAceto,
-    RimossaMelma,
-    AcquaLavata,
-}
-
 
 public static class GameState
 {
-    public const RoomType START_ROOM = RoomType.Cucina;
+    public const RoomType START_ROOM = RoomType.Soggiorno;
 
     private static RoomType m_CurrentRoom = START_ROOM;
     private static HashSet<EntityType> m_PickedEntities = new HashSet<EntityType>();

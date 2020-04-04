@@ -29,6 +29,8 @@ class Ita
             { EntityType.Bicarbonato, "Usa il bicarbonato di sodio." },
             { EntityType.Chiave, "Usa la chiave." },
             { EntityType.Calamaro, "Usa il... calamaro ?" },
+            { EntityType.Lampadina, "Usa la lampadina." },
+            { EntityType.Password, "Usa la segretissima password." },
         });
 
         entity_texts.Add(EntityTextType.Inventario_Complemento, new Dictionary<EntityType, string>()
@@ -42,12 +44,29 @@ class Ita
             { EntityType.Chiave, " la chiave" },
             { EntityType.Calamaro, " il calamaro" },
             { EntityType.Guanti, "i guanti" },
+            { EntityType.Password, "il foglietto con la password." },
 
             // cucina
+            { EntityType.Lampadario, "il lampadario" },
             { EntityType.Porta, "la porta" },
             { EntityType.Frigorifero, "il frigorifero" },
             { EntityType.Rubinetti, "i rubinetti" },
             { EntityType.Lavandino, "il lavandino otturato" },
+
+            // soggiorno
+            { EntityType.Uscita, "la porta di casa" },
+            { EntityType.Quadro_1, "il quadro" },
+            { EntityType.Quadro_2, "il quadro" },
+            { EntityType.Quadro_3, "il quadro" },
+            { EntityType.Lampadina, "la lampadina" },
+            { EntityType.Finestra, "la finestra" },
+            { EntityType.Telefono, "il telefono" },
+            { EntityType.Fiori, "i fiori" },
+            { EntityType.Libri, "i libri" },
+            { EntityType.CestinoCaramelle, "il cestino di caramelle" },
+            { EntityType.Penne, "le penne" },
+            { EntityType.PupazzoPrincipe, "il pupazzo del principe" },
+            { EntityType.PupazzoSirenetta, "il pupazzo della sirenetta" },
         });
 
         entity_texts.Add(EntityTextType.Inventario_Soggetto, new Dictionary<EntityType, string>()
@@ -59,9 +78,11 @@ class Ita
             { EntityType.Bicarbonato, "Usa il bicarbonato di sodio con" },
             { EntityType.Chiave, "Usa la chiave con" },
             { EntityType.Calamaro, "Usa il calamaro con" },
+            { EntityType.Lampadina, "Usa la lampadina con" },
+            { EntityType.Password, "Usa la segretissima password con" },
         });
 
-        entity_texts.Add(EntityTextType.Inventario_Prendi, new Dictionary<EntityType, string>()
+        entity_texts.Add(EntityTextType.Inventario_Preso, new Dictionary<EntityType, string>()
         {
             { EntityType.Insalata, "Ho preso l'insalata, ma non ho nessuna intenzione di mangiarla." },
             { EntityType.Bicarbonato, "Ho preso il bicarbonato. Ha un sacco di usi, potrebbe tornare utile." },
@@ -70,22 +91,56 @@ class Ita
             { EntityType.Lattuga, "---" },
             { EntityType.Aceto, "---" },
             { EntityType.Chiave, "Ho preso la chiave." },
+            { EntityType.Lampadina, "Ho preso la lampadina." },
+            { EntityType.Password, "Ho preso il foglietto. Sopra c'è scritto 'password'." },
         });
 
         entity_texts.Add(EntityTextType.Interagisci, new Dictionary<EntityType, string>()
         {
-            {  EntityType.Insalata, "Prendi l'insalata" },
-            {  EntityType.Porta, "Esci da questa stanza" },
-            {  EntityType.Frigorifero, "Apri il frigorifero" },
-            {  EntityType.Bicarbonato, "Prendi il bicarbonato di sodio" },
-            {  EntityType.Calamaro, "Prendi il calamaro" },
-            {  EntityType.Rubinetti, "Apri i rubinetti" },
-            {  EntityType.Guanti, "Prendi i guanti" },
-            {  EntityType.Chiave, "Prendi la chiave" },
-            {  EntityType.Lavandino, "---" },
+            { EntityType.Insalata, "Prendi l'insalata" },
+            { EntityType.Porta, "Esci da questa stanza" },
+            { EntityType.Frigorifero, "Apri il frigorifero" },
+            { EntityType.Bicarbonato, "Prendi il bicarbonato di sodio" },
+            { EntityType.Calamaro, "Prendi il calamaro" },
+            { EntityType.Rubinetti, "Apri i rubinetti" },
+            { EntityType.Guanti, "Prendi i guanti" },
+            { EntityType.Chiave, "Prendi la chiave" },
+            { EntityType.Password, "Prendi il foglietto nascosto" },
+            { EntityType.Lampadario, "Tocca il lampadario" },
+            { EntityType.Lavandino, "---" },
+            // todo v
+            { EntityType.Uscita, "Esci di casa" },
+            { EntityType.Quadro_1, "Osserva il quadro con le persone" },
+            { EntityType.Quadro_2, "Osserva il quadro con i fiori" },
+            { EntityType.Quadro_3, "Osserva il quadro con la principessa" },
+            { EntityType.Lampadina, "Prendi la lampadina" },
+            { EntityType.Finestra, "Apri la finestra" },
+            { EntityType.Telefono, "Usa il telefono" },
+            { EntityType.Fiori, "Prendi i fiori" },
+            { EntityType.Libri, "Leggi i libri" },
+            { EntityType.CestinoCaramelle, "Mangia una caramella" },
+            { EntityType.Penne, "Prendi le penne" },
+            { EntityType.PupazzoPrincipe, "Prendi il pupazzo del principe" },
+            { EntityType.PupazzoSirenetta, "Prendi il pupazzo della sirenetta" },
         });
 
-       rooms_texts.Add(RoomType.Cucina, new Dictionary<string, string>()
+        entity_texts.Add(EntityTextType.ConfermaInterazione, new Dictionary<EntityType, string>()
+        {
+            // todo v
+            { EntityType.Quadro_1, "E' un quadro con due persone che non rispettano il metro di distanza" },
+            { EntityType.Quadro_2, "E' un quadro con dei fiori disegnati. E polline. Tanto polline." },
+            { EntityType.Finestra, "Non ci penso proprio con quel coso che mi aspetta lì fuori!!" },
+            { EntityType.Telefono, "Non saprei a chi telefonare" },
+            { EntityType.Fiori, "Sono fiori finti, e non saprei cosa farmene." },
+            { EntityType.Libri, "'I promessi sposi'. Sempre di attualità." },
+            { EntityType.CestinoCaramelle, "Gnam. Gnam. ... Gnam. Deliziosa." },
+            { EntityType.Penne, "Non serve che le prenda, ne ho sempre una in tasca." },
+            { EntityType.PupazzoPrincipe, "E' un principe e di azzurro ha solo i pantaloni." },
+            { EntityType.PupazzoSirenetta, "Ha gli occhi da pesce lesso." },
+        });
+
+
+        rooms_texts.Add(RoomType.Cucina, new Dictionary<string, string>()
         {
             { "welcome", "Sei in cucina" },
             { "action_frigorifero", "Ho aperto il frigorifero" },
@@ -99,11 +154,48 @@ class Ita
             { "lavandino_bicarbonato", "Libera lavandino pieno di acqua sporca e bicarbonato" },
             { "lavandino_aceto", "Libera lavandino pieno di acqua sporca e aceto" },
             { "lavandino_base", "Libera lavandino otturato" },
+            { "interagisci_commit_lampadario", "Ora che funziona è meglio non toccarlo!" },
        });
+
+        rooms_texts.Add(RoomType.CucinaBuia, new Dictionary<string, string>()
+        {
+            { "welcome", "Sei in cucina, ma è tutto buio!" },
+            { "confirm_lampadario", "Toccare il lampadario non è di aiuto" },
+            { "confirm_porta", "Esci da questa stanza" },
+            { "confirm_guanti", "Una scatola piena di... qualcosa." },
+            { "confirm_bicarbonato", "E' una scatola di cartone. Non so cosa contenga." },
+            { "confirm_lavandino", "Bleaaaaah!!! la mia mano si è sporcata di qualche liquame disgustoso!" },
+            { "confirm_frigorifero", "Ahi! Ho sbattuto il mignolino del piede." },
+            { "interagisci_lampadario", "La lampadina del lampadario è bruciata." },
+            { "interagisci_porta", "La porta conduce verso... la luce" },
+            { "interagisci_guanti", "Un oggetto misterioso" },
+            { "interagisci_bicarbonato", "Non ho idea cosa" },
+            { "interagisci_lavandino", "Lavandino" },
+            { "interagisci_frigorifero", "Frigorifero" },
+            { "complemento_lampadario", "il lampadario" },
+            { "complemento_porta", "la porta" },
+            { "complemento_guanti", "la scatola" },
+            { "complemento_bicarbonato", "la scatola" },
+            { "complemento_lavandino", "il lavandino" },
+            { "complemento_frigorifero", "il frigorifero" },
+        });
 
         rooms_texts.Add(RoomType.Corridoio, new Dictionary<string, string>()
         {
             { "welcome", "Scegli dove andare" },
+        });
+
+        rooms_texts.Add(RoomType.Soggiorno, new Dictionary<string, string>()
+        {
+            { "welcome", "Sei in soggiorno" },
+            { "quadro_nascosto", "C'è qualcosa dietro al quadro..." },
+            { "uscita", "Non posso uscire. Mi servono mascherina, guanti e autocertificazione." },
+            { "uscitam", "Non posso uscire. Mi servono ancora guanti e autocertificazione." },
+            { "uscitag", "Non posso uscire. Mi servono ancora mascherina e autocertificazione." },
+            { "uscitaa", "Non posso uscire. Mi serve ancora l'autocertificazione." },
+            { "uscitagm", "Non posso uscire. Mi serve ancora l'autocertificazione." },
+            { "uscitaam", "Non posso uscire. Mi servono ancora i guanti." },
+            { "uscitaag", "Non posso uscire. Mi serve ancora la mascherina." },
         });
 
     }

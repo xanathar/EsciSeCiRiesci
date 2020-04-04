@@ -21,7 +21,7 @@ public class Corridoio : Room
                 Travel(RoomType.Soggiorno);
                 break;
             case EntityType.Corridoio_Cucina:
-                Travel(RoomType.Cucina);
+                Travel(GameState.HasState(SpecialState.CucinaIlluminata) ? RoomType.Cucina : RoomType.CucinaBuia);
                 break;
             case EntityType.Corridoio_Balcone:
                 Travel(RoomType.Balcone);

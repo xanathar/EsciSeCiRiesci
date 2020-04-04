@@ -1,14 +1,9 @@
-﻿
-
-
-
-
-public enum EntityType
+﻿public enum EntityType
 {
     Unknown,
-    Telefono,
-    Scrigno,
-    Giornali,
+    Quadro_1,
+    Quadro_2,
+    Quadro_3,
     Porta,
     Lampadario,
 
@@ -50,6 +45,17 @@ public enum EntityType
     Computer_Documento_Chiudi,//.
 
     Computer_PasswordLock,//.
+
+    Uscita,
+
+    Finestra,
+    Telefono,
+    Fiori,
+    Libri,
+    CestinoCaramelle,
+    Penne,
+    PupazzoPrincipe,
+    PupazzoSirenetta,
 }
 
 

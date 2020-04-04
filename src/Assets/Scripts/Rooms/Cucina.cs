@@ -15,6 +15,7 @@ public class Cucina : Room
         yield return EntityType.Insalata;
         yield return EntityType.Calamaro;
         yield return EntityType.Frigorifero;
+        yield return EntityType.Lampadario;
         yield return EntityType.Chiave;
     }
 
@@ -55,6 +56,9 @@ public class Cucina : Room
                 break;
             case EntityType.Guanti:
                 LogRoom("stop_guanti");
+                break;
+            case EntityType.Lampadario:
+                LogRoom("interagisci_commit_lampadario");
                 break;
             case EntityType.Lavandino:
                 if (!GameState.HasState(SpecialState.RimossaMelma))

@@ -27,7 +27,9 @@ public class RoomManager : MonoBehaviour
         Dictionary<RoomType, Room> roomsByType = Room.RoomLogicFactory().ToDictionary(r => r.GetRoomType());
 
         if (!(new HashSet<RoomType>(roomMarkersByType.Keys)).SetEquals(new HashSet<RoomType>(roomsByType.Keys)))
-            Debug.LogError("Room markers and logics do not match!");
+            Utils.Error("Room markers and logics do not match!\nLogics = {0}\nMarkers = {1}", 
+                string.Join(",", roomsByType.Keys.OrderBy(t => t).Select(t => t.ToString()).ToArray()),
+                string.Join(",", roomMarkersByType.Keys.OrderBy(t => t).Select(t => t.ToString()).ToArray()));
 
         foreach (var room in roomMarkersByType.Values.Where(rr => rr.WhichRoom != GameState.CurrentRoom))
             room.gameObject.SetActive(false);
