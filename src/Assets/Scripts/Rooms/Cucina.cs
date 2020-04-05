@@ -77,7 +77,7 @@ public class Cucina : Room
         if (inventory == EntityType.Forbici && e == EntityType.Guanti)
         {
             PickEntity(EntityType.Guanti);
-            return true;
+            return false;
         }
 
         if (inventory == EntityType.Olio && e == EntityType.Lavandino)

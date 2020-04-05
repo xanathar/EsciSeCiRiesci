@@ -223,7 +223,7 @@ class Ita
             { "stop_guanti", "La confezione è sigillata e non riesco ad aprirla" },
             { "stop_lavandino", "Non metterei le mani lì dentro per nessun motivo" },
             { "stop_melmoso", "È già abbastanza melmoso così" },
-            { "action_sturato", "Il lavandino si è liberato! E c'è qualcosa sul fondo." },
+            { "action_sturato", "Lo scarico si è sbloccato! E c'è qualcosa sul fondo del lavandino." },
             { "action_aceto", "Ho versato l'aceto nel lavandino" },
             { "action_bicarbonato", "Ho versato il bicarbonato nel lavandino" },
             { "lavandino_bicarbonato", "Libera lavandino pieno di acqua sporca e bicarbonato" },
@@ -303,7 +303,7 @@ class Ita
             { "preso_autocertificazione", "Ho preso l'autocertificazione!" },
             { "stampante_inutile", "Ora che ho l'autocertificazione, la stampante non mi serve più." },
             { "stampante_pronta", "La stampante è pronta per stampare." },
-            { "stampante_inchiostro", "Una lucina sulla stampante lampeggia. Dice: inchiostro esaurito." },
+            { "stampante_inchiostro", "Una lucina sulla stampante lampeggia. Indica: inchiostro esaurito." },
         });
 
     }

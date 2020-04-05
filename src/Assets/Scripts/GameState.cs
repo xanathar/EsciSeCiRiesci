@@ -51,6 +51,7 @@ public static class GameState
         m_CurrentRoom = START_ROOM;
         m_PickedEntities.Clear();
         InventoryItems.Clear();
+        m_SpecialStates.Clear();
     }
 
     public static void Save()

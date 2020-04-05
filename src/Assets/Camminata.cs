@@ -167,9 +167,6 @@ public class Camminata : MonoBehaviour
 
         for (int i = 0; i < m_passetti.Length; i++)
         {
-            if (i > m_passetti.Length - 2)
-                roomManager.StartTravel();
-
             if (i >= 2)
                 m_passetti[i - 2].FadeOff();
             else if (i == 1)

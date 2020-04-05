@@ -9,7 +9,8 @@ public static class Utils
 {
     public static void ShadeText(this Text go, float shade)
     {
-        go.GetComponent<Text>().color = new Color(1, 1, 1, shade);
+        var txt = go.GetComponent<Text>();
+        txt.color = new Color(txt.color.r, txt.color.g, txt.color.b, shade);
     }
 
     public static void Shade(this Image go, float shade)
