@@ -54,7 +54,7 @@ public class InGameUiButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         string file = string.Format("EsciSeCiRiesci{0}.png",
             DateTime.Now.ToString("yyyy-MM-dd_hh-mm-ss"));
 
-        Application.CaptureScreenshot(System.IO.Path.Combine(path, file));
+        ScreenCapture.CaptureScreenshot(System.IO.Path.Combine(path, file));
 #endif
     }
 
