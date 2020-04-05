@@ -12,6 +12,7 @@ public enum OverlayType
     ArmadiettoBalcone,
     Capra,
     CapraRuminante,
-
+    AutocertificazioneNellaStampante,
+    Computer_Ok_Stampato,
 }
 

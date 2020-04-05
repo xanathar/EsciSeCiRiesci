@@ -13,6 +13,7 @@ class Computer : Room
         yield return EntityType.Computer_Documento;
         yield return EntityType.Computer_Esci;
         yield return EntityType.Computer_MsgBox_Ink_Ok;
+        yield return EntityType.Computer_MsgBox_Print_Ok;
         yield return EntityType.Computer_MsgBox_Cestino_Ok;
         yield return EntityType.Computer_Documento_Stampa;
         yield return EntityType.Computer_Documento_Chiudi;
@@ -29,13 +30,33 @@ class Computer : Room
             case EntityType.Computer_MsgBox_Cestino_Ok:
                 GetRoomOverlay(OverlayType.Computer_Errore_Cestino).OverlayOff();
                 break;
+            case EntityType.Computer_MsgBox_Print_Ok:
+                GetRoomOverlay(OverlayType.Computer_Ok_Stampato).OverlayOff();
+                break;
             case EntityType.Computer_Documento:
                 GetRoomOverlay(OverlayType.Computer_Documento).OverlayOn();
                 break;
             case EntityType.Computer_Documento_Stampa:
                 GetRoomOverlay(OverlayType.Computer_Documento).OverlayOff();
-                GetRoomOverlay(OverlayType.Computer_Errore_Inchiostro).OverlayOn();
-                PlaySound("error");
+
+                if (GameState.HasState(SpecialState.MessoInchiostro))
+                {
+                    if (GameState.HasState(SpecialState.AutocertificazioneStampata))
+                    {
+                        LogRoom("ho_gia_stampato");
+                    }
+                    else
+                    {
+                        GetRoomOverlay(OverlayType.Computer_Ok_Stampato).OverlayOn();
+                        PlaySound("printer");
+                        GameState.SetState(SpecialState.AutocertificazioneStampata);
+                    }
+                }
+                else
+                {
+                    GetRoomOverlay(OverlayType.Computer_Errore_Inchiostro).OverlayOn();
+                    PlaySound("error");
+                }
                 break;
             case EntityType.Computer_Documento_Chiudi:
                 GetRoomOverlay(OverlayType.Computer_Documento).OverlayOff();
@@ -47,6 +68,9 @@ class Computer : Room
                 GetRoomOverlay(OverlayType.Computer_BSOD).OverlayOn();
                 StartCoroutine(BSOD());
                 PlaySound("error");
+                break;
+            case EntityType.Computer_Esci:
+                Travel(RoomType.Camera);
                 break;
         }
     }

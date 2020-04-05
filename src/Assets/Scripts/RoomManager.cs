@@ -13,6 +13,9 @@ public class RoomManager : MonoBehaviour
     public InventoryManager Inventory;
     public Image TravelFader;
     public SoundFX SoundFX;
+    public Macchinina macchinina;
+
+    public Camminata[] CamminateCorridoio;
 
     Room m_Room;
     RoomMarker m_RoomMarker;
@@ -33,6 +36,9 @@ public class RoomManager : MonoBehaviour
 
         foreach (var room in roomMarkersByType.Values.Where(rr => rr.WhichRoom != GameState.CurrentRoom))
             room.gameObject.SetActive(false);
+
+        foreach (var cc in CamminateCorridoio)
+            cc.Init(this);
 
         m_Room = roomsByType[GameState.CurrentRoom];
         m_RoomMarker = roomMarkersByType[GameState.CurrentRoom];
@@ -62,6 +68,11 @@ public class RoomManager : MonoBehaviour
             yield return null;
         }
         TravelFader.Shade(0f);
+    }
+
+    public void DisableInteractions()
+    {
+        InteractionsEnabled = false;
     }
 
     IEnumerator FadeExit()

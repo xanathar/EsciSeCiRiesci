@@ -9,5 +9,7 @@ public enum SpecialState
     CapraRuminante,
     ArmadiettoAperto,
     ScalaOliata,
+    MessoInchiostro,
+    AutocertificazioneStampata,
 }
 

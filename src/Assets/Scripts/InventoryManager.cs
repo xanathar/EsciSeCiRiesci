@@ -119,6 +119,17 @@ public class InventoryManager : MonoBehaviour
 
         if (this.ActiveItem != EntityType.Unknown)
         {
+            if ((this.ActiveItem == EntityType.Forbici && inventoryObject.GetEntityType() == EntityType.Calamaro)) // ||
+                //(this.ActiveItem == EntityType.Calamaro && inventoryObject.GetEntityType() == EntityType.Forbici))
+            {
+                ActionLog.Log(Texts.Get("calamaro_tagliato"));
+                inventoryObject.Clear();
+                this.AddItem(EntityType.CalamaroInchiostro);
+                this.Backup();
+                GameState.Save();
+                InteractionText.text = "";
+            }
+
             if ((this.ActiveItem == EntityType.Olio || this.ActiveItem == EntityType.Aceto) && (inventoryObject.GetEntityType() == EntityType.Lattuga))
             {
                 ActionLog.Log(Texts.Get("insalata_nocondimento"));

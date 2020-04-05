@@ -13,10 +13,26 @@ class ComputerPassword: Room
 
     public override void ConfirmInteraction(EntityType e)
     {
+        if (e == EntityType.Computer_Esci)
+        {
+            Travel(RoomType.Camera);
+            return;
+        }
+
+        LogRoom("lock_password");
     }
 
     public override bool ConfirmInventoryInteraction(EntityType inventory, EntityType e)
     {
+        if (inventory == EntityType.Password && e == EntityType.Computer_PasswordLock)
+        {
+            Travel(RoomType.Computer);
+        }
+        else
+        {
+            LogRandomFailure();
+        }
+
         return false;
     }
 
@@ -35,5 +51,20 @@ class ComputerPassword: Room
 
     public override void StartInventoryInteraction(EntityType inventory, EntityType e)
     {
+        if (inventory != EntityType.Password)
+        {
+            PromptRoom("inventario_no_password");
+        }
+        else
+        {
+            if (e == EntityType.Computer_PasswordLock)
+            {
+                PromptRoom("password_sblocca");
+            }
+            else
+            {
+                PromptRoom("password_su_altro");
+            }
+        }
     }
 }

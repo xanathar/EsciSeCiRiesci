@@ -18,7 +18,8 @@ public class Corridoio : Room
         switch (e)
         {
             case EntityType.Corridoio_Soggiorno:
-                Travel(RoomType.Soggiorno);
+                GetCamminate().First(c => c.Destinazione == RoomType.Soggiorno).IniziaCamminata();
+
                 break;
             case EntityType.Corridoio_Cucina:
                 Travel(GameState.HasState(SpecialState.CucinaIlluminata) ? RoomType.Cucina : RoomType.CucinaBuia);
@@ -28,6 +29,9 @@ public class Corridoio : Room
                 break;
             case EntityType.Corridoio_Camera:
                 Travel(RoomType.Camera);
+                break;
+            case EntityType.Corridoio_WC:
+                //+++
                 break;
             default:
                 break;

@@ -8,6 +8,7 @@ public class RaycastChecker : MonoBehaviour
 {
     void Start()
     {
+#if UNITY_EDITOR
         GameObject[] raycastTargets = this.gameObject
             .GetComponentsInChildren<ICanvasRaycastFilter>()
             .Cast<Graphic>()
@@ -32,5 +33,6 @@ public class RaycastChecker : MonoBehaviour
                 Debug.LogWarningFormat("Invalid raycast target: {0}", Utils.GetObjectPath(rt));
             }
         }
+#endif
     }
 }

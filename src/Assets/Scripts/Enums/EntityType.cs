@@ -59,6 +59,26 @@
     Capra,
     CapraRuminante,
     Serratura,
+
+    // camera
+    Computer,
+    Stampante,
+    // Mascherina,
+    // Autocertificazione,
+    Ciabatte,
+    Orsacchiotto,
+    Pallone1,
+    Pallone2,
+    TelecomandoMacchinina,
+    Libri_Studio,
+    Foto,
+    Tazza,
+    // Fiori
+    CalamaroInchiostro,
+    Computer_MsgBox_Print_Ok,//.
+
+    Corridoio_Corridoio,
+    Corridoio_WC,
 }
 
 

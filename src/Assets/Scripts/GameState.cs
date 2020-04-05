@@ -6,7 +6,7 @@ using UnityEngine;
 
 public static class GameState
 {
-    public const RoomType START_ROOM = RoomType.Soggiorno;
+    public const RoomType START_ROOM = RoomType.Corridoio;
 
     private static RoomType m_CurrentRoom = START_ROOM;
     private static HashSet<EntityType> m_PickedEntities = new HashSet<EntityType>();

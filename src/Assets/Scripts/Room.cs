@@ -16,6 +16,7 @@ public abstract class Room
         yield return new Balcone();
         yield return new Computer();
         yield return new ComputerPassword();
+        yield return new StanzaCamera();
     }
 
     private RoomManager roomManager;
@@ -131,6 +132,21 @@ public abstract class Room
     public void Success()
     {
         PlaySound("success");
+    }
+
+    protected Macchinina GetMacchinina()
+    {
+        return roomManager.macchinina;
+    }
+
+    protected Camminata[] GetCamminate()
+    {
+        return roomManager.CamminateCorridoio;
+    }
+
+    protected void DisableInteractions()
+    {
+        roomManager.DisableInteractions();
     }
 }
 
