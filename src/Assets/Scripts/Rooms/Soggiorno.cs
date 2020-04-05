@@ -45,8 +45,8 @@ public class Soggiorno : Room
                 {
                     string str = string.Format("{0}{1}{2}",
                         GameState.HasPickedEntity(EntityType.Autocertificazione) ? "a" : "",
-                        GameState.HasPickedEntity(EntityType.Guanti) ? "a" : "",
-                        GameState.HasPickedEntity(EntityType.Mascherina) ? "a" : "");
+                        GameState.HasPickedEntity(EntityType.Guanti) ? "g" : "",
+                        GameState.HasPickedEntity(EntityType.Mascherina) ? "m" : "");
 
                     if (str == "agm")
                     {
