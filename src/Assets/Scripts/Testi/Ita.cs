@@ -12,9 +12,10 @@ class Ita
     public Ita()
     {
         texts.Add("inventario_disabilitato", "Non ha molto senso usare un oggetto qui");
-        texts.Add("insalata_nocondimento", "Non voglio mangiarla, quindi non ha senso condirla.");
-        texts.Add("insalata_aperta", "Hai aperto la vaschetta di insalata.");
-        texts.Add("calamaro_tagliato", "Ho tagliato il calamaro. E' pieno di inchiostro.");
+        texts.Add("insalata_nocondimento", "Non ho intenzione di mangiarla, quindi non la condirò.");
+        texts.Add("insalata_aperta", "Ho aperto la vaschetta di insalata.");
+        texts.Add("calamaro_tagliato", "Ho tagliato il calamaro. È pieno di inchiostro.");
+        texts.Add("intro", "È quasi ora di pranzo e ho una gran fame, ma temo che il frigorifero sia più vuoto del mio stomaco ...\nDevo uscire a fare un po' di spesa, ma per poterlo fare devo procurarmi una mascherina, un paio di guanti e un modulo per l'autocertificazione.");
 
         texts.Add("fail_1", "Non è una buona idea.");
         texts.Add("fail_2", "Uhm... no.");
@@ -23,17 +24,18 @@ class Ita
 
         entity_texts.Add(EntityTextType.Inventario_Usa, new Dictionary<EntityType, string>()
         {
-            { EntityType.Insalata, "Apri la vaschetta di insalata preconfezionata, marca 'Dammi Del Tu'." },
-            { EntityType.Olio, "Usa la bustina di olio extravergine di oliva." },
-            { EntityType.Lattuga, "Usa la lattuga." },
-            { EntityType.Aceto, "Usa la bustina di aceto." },
-            { EntityType.Bicarbonato, "Usa il bicarbonato di sodio." },
-            { EntityType.Chiave, "Usa la chiave." },
+            { EntityType.Insalata, "Apri la vaschetta di insalata preconfezionata, marca 'Dammi Del Tu'" },
+            { EntityType.Olio, "Usa la bustina di olio extravergine di oliva" },
+            { EntityType.Lattuga, "Usa la lattuga" },
+            { EntityType.Aceto, "Usa la bustina di aceto" },
+            { EntityType.Bicarbonato, "Usa il bicarbonato di sodio" },
+            { EntityType.Chiave, "Usa la chiave" },
             { EntityType.Calamaro, "Usa il... calamaro ?" },
-            { EntityType.Lampadina, "Usa la lampadina." },
-            { EntityType.Password, "Usa la segretissima password." },
+            { EntityType.Lampadina, "Usa la lampadina" },
+            { EntityType.Password, "Usa la segretissima password" },
             { EntityType.Forbici, "Usa le forbici" },
             { EntityType.Scala, "Usa la scala" },
+            { EntityType.Guanti, "Usa i guanti" },
             { EntityType.Mascherina, "Usa la mascherina" },
             { EntityType.Autocertificazione, "Usa l'autocertificazione" },
             { EntityType.CalamaroInchiostro, "Usa il calamaro pieno di inchiostro" },
@@ -56,6 +58,7 @@ class Ita
             { EntityType.Mascherina, "la mascherina" },
             { EntityType.Autocertificazione, "l'autocertificazione" },
             { EntityType.CalamaroInchiostro, "il calamaro pieno di inchiostro" },
+            { EntityType.Lampadina, "la lampadina" },
 
             // cucina
             { EntityType.Lampadario, "il lampadario" },
@@ -69,7 +72,6 @@ class Ita
             { EntityType.Quadro_1, "il quadro" },
             { EntityType.Quadro_2, "il quadro" },
             { EntityType.Quadro_3, "il quadro" },
-            { EntityType.Lampadina, "la lampadina" },
             { EntityType.Finestra, "la finestra" },
             { EntityType.Telefono, "il telefono" },
             { EntityType.Fiori, "i fiori" },
@@ -113,6 +115,7 @@ class Ita
             { EntityType.Mascherina, "Usa la mascherina con" },
             { EntityType.Autocertificazione, "Usa l'autocertificazione con" },
             { EntityType.CalamaroInchiostro, "Usa il calamaro pieno di inchiostro con" },
+            { EntityType.Guanti, "Usa i guanti con" },
         });
 
         entity_texts.Add(EntityTextType.Inventario_Preso, new Dictionary<EntityType, string>()
@@ -131,6 +134,7 @@ class Ita
             { EntityType.Mascherina, "Ho preso la mascherina" },
             { EntityType.Autocertificazione, "Ho preso l'autocertificazione" },
             { EntityType.CalamaroInchiostro, "---" },
+            { EntityType.Guanti, "Ho preso i guanti" },
         });
 
         entity_texts.Add(EntityTextType.Interagisci, new Dictionary<EntityType, string>()
@@ -176,7 +180,7 @@ class Ita
             { EntityType.Pallone1, "Gioca con il pallone da calcio." },
             { EntityType.Pallone2, "Gioca con il pallone da spiaggia." },
             { EntityType.TelecomandoMacchinina, "Usa il telecomando della macchinina." },
-            { EntityType.Libri_Studio, "Leggi i libri di scuola." },
+            { EntityType.Libri_Studio, "Sfoglia i libri di scuola." },
             { EntityType.Foto, "Guarda le fotografie" },
             { EntityType.Tazza, "Prendi la tazza." },
         });
@@ -184,8 +188,8 @@ class Ita
         entity_texts.Add(EntityTextType.ConfermaInterazione, new Dictionary<EntityType, string>()
         {
             // todo v
-            { EntityType.Quadro_1, "È un quadro con due persone che non rispettano il metro di distanza" },
-            { EntityType.Quadro_2, "È un quadro con dei fiori disegnati. E polline. Tanto polline." },
+            { EntityType.Quadro_1, "È un quadro con due persone. Non mi sembra che rispettino la distanza di sicurezza" },
+            { EntityType.Quadro_2, "È un quadro con dei fiori disegnati." },
             { EntityType.Quadro_3, "Non c'è più niente dietro al quadro della principessa." },
             { EntityType.Finestra, "Non ci penso proprio con quel coso che mi aspetta lì fuori!!" },
             { EntityType.Telefono, "Non saprei a chi telefonare" },
@@ -193,7 +197,7 @@ class Ita
             { EntityType.Libri, "'I promessi sposi'. Sempre di attualità." },
             { EntityType.CestinoCaramelle, "Gnam. Gnam. ... Gnam. Deliziosa." },
             { EntityType.Penne, "Non serve che le prenda, ne ho sempre una in tasca." },
-            { EntityType.PupazzoPrincipe, "È un principe e di azzurro ha solo i pantaloni." },
+            { EntityType.PupazzoPrincipe, "È un principe, ma di azzurro ha solo i pantaloni." },
             { EntityType.PupazzoSirenetta, "Ha gli occhi da pesce lesso." },
             { EntityType.Serratura, "L'armadietto è chiuso a chiave." },
             { EntityType.Scala, "La capra ha fame e non mi lascia prendere la scala." },
@@ -201,12 +205,12 @@ class Ita
             { EntityType.CapraRuminante, "Ora la capretta mangia serena." },
 
             { EntityType.Ciabatte, "Ho già le scarpe, devo uscire." },
-            { EntityType.Orsacchiotto, "È un regalo di mia mamma per il mio compleanno. Ma non è il momento di giocarci." },
+            { EntityType.Orsacchiotto, "È un regalo della mamma per il mio compleanno. Ma ora non è il momento di giocarci." },
             { EntityType.Pallone1, "Non mi piace giocare a calcio." },
-            { EntityType.Pallone2, "Non si può uscire, non potrei andare in spiaggia a giocare." },
-            { EntityType.Libri_Studio, "Sono i miei libri di scuola: un periodo tremendo." },
-            { EntityType.Foto, "È una scatola piena di foto. Non è il momento di guardarle." },
-            { EntityType.Tazza, "Conteneva caffé. È lì da mesi e non è il momento adatto per toglierla." },
+            { EntityType.Pallone2, "Non si può uscire, non posso andare in spiaggia a giocare." },
+            { EntityType.Libri_Studio, "Sono i libri che usavo quando andavo a scuola: un periodo tremendo." },
+            { EntityType.Foto, "È una scatola piena di foto. Ora però non ho proprio il tempo di guardarle." },
+            { EntityType.Tazza, "Conteneva caffé. È lì da mesi, e può restarci ancora per un po'." },
             { EntityType.Mascherina, "È troppo in alto, servirebbe una scala per prenderla." },
         });
 
@@ -215,7 +219,7 @@ class Ita
         {
             { "welcome", "Sei in cucina" },
             { "action_frigorifero", "Ho aperto il frigorifero" },
-            { "stop_rubinetti", "Ci manca solo aggiungere altra acqua!" },
+            { "stop_rubinetti", "Non è proprio il caso di aggiungere altra acqua!" },
             { "stop_guanti", "La confezione è sigillata e non riesco ad aprirla" },
             { "stop_lavandino", "Non metterei le mani lì dentro per nessun motivo" },
             { "stop_melmoso", "È già abbastanza melmoso così" },
@@ -240,7 +244,7 @@ class Ita
             { "interagisci_lampadario", "La lampadina del lampadario è bruciata." },
             { "interagisci_porta", "La porta conduce verso... la luce" },
             { "interagisci_guanti", "Un oggetto misterioso" },
-            { "interagisci_bicarbonato", "Non ho idea cosa" },
+            { "interagisci_bicarbonato", "Non ho idea di cosa sia" },
             { "interagisci_lavandino", "Lavandino" },
             { "interagisci_frigorifero", "Frigorifero" },
             { "complemento_lampadario", "il lampadario" },

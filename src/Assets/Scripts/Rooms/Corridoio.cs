@@ -11,6 +11,7 @@ public class Corridoio : Room
         yield return EntityType.Corridoio_Camera;
         yield return EntityType.Corridoio_Cucina;
         yield return EntityType.Corridoio_Soggiorno;
+        yield return EntityType.Corridoio_WC;
     }
 
     public override void ConfirmInteraction(EntityType e)
@@ -18,20 +19,23 @@ public class Corridoio : Room
         switch (e)
         {
             case EntityType.Corridoio_Soggiorno:
-                GetCamminate().First(c => c.Destinazione == RoomType.Soggiorno).IniziaCamminata();
-
+                DisableInteractions();
+                GetCamminate().FirstOrDefault(c => c.Destinazione == RoomType.Soggiorno).IniziaCamminata();
                 break;
             case EntityType.Corridoio_Cucina:
-                Travel(GameState.HasState(SpecialState.CucinaIlluminata) ? RoomType.Cucina : RoomType.CucinaBuia);
+                DisableInteractions();
+                GetCamminate().FirstOrDefault(c => c.Destinazione == RoomType.Cucina).IniziaCamminata();
                 break;
             case EntityType.Corridoio_Balcone:
-                Travel(RoomType.Balcone);
+                DisableInteractions();
+                GetCamminate().FirstOrDefault(c => c.Destinazione == RoomType.Balcone).IniziaCamminata();
                 break;
             case EntityType.Corridoio_Camera:
-                Travel(RoomType.Camera);
+                DisableInteractions();
+                GetCamminate().FirstOrDefault(c => c.Destinazione == RoomType.Camera).IniziaCamminata();
                 break;
             case EntityType.Corridoio_WC:
-                //+++
+                GetCamminate().FirstOrDefault(c => c.Destinazione == RoomType.WC).IniziaCamminata();
                 break;
             default:
                 break;
@@ -46,6 +50,12 @@ public class Corridoio : Room
     public override void EnterRoom()
     {
         LogRoom("welcome");
+
+        if (GameState.HasState(SpecialState.GameWon))
+        {
+            DisableInteractions();
+            GetCamminate().FirstOrDefault(c => c.Destinazione == RoomType.FUOOOORIIIII).IniziaCamminata();
+        }
     }
 
     public override RoomType GetRoomType()

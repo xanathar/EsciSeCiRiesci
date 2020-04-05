@@ -42,7 +42,7 @@ public class MainMenu : MonoBehaviour
             else
             {
                 GameState.ResetNew();
-                SceneManager.LoadScene("Adventure");
+                SceneManager.LoadScene("Intro");
             }
         });
 
@@ -64,7 +64,7 @@ public class MainMenu : MonoBehaviour
         {
             this.GetComponent<AudioSource>().Play();
             GameState.ResetNew();
-            SceneManager.LoadScene("Adventure");
+            SceneManager.LoadScene("Intro");
         });
 
         ButtonAlertNo.OnClick(() =>

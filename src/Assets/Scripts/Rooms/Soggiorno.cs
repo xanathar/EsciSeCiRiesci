@@ -50,7 +50,8 @@ public class Soggiorno : Room
 
                     if (str == "agm")
                     {
-                        // +++
+                        GameState.SetState(SpecialState.GameWon);
+                        Travel(RoomType.Corridoio);
                     }
                     else
                     {

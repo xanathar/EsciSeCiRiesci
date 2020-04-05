@@ -37,6 +37,8 @@ public class RoomManager : MonoBehaviour
         foreach (var room in roomMarkersByType.Values.Where(rr => rr.WhichRoom != GameState.CurrentRoom))
             room.gameObject.SetActive(false);
 
+        CamminateCorridoio = GetComponentsInChildren<Camminata>();
+
         foreach (var cc in CamminateCorridoio)
             cc.Init(this);
 

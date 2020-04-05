@@ -11,5 +11,6 @@ public enum SpecialState
     ScalaOliata,
     MessoInchiostro,
     AutocertificazioneStampata,
+    GameWon
 }
 

@@ -8,5 +8,7 @@
     Camera,
     Corridoio,
     Computer,
-    Computer_Password
+    Computer_Password,
+    WC,
+    FUOOOORIIIII
 }

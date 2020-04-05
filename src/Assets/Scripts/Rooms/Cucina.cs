@@ -74,6 +74,12 @@ public class Cucina : Room
 
     public override bool ConfirmInventoryInteraction(EntityType inventory, EntityType e)
     {
+        if (inventory == EntityType.Forbici && e == EntityType.Guanti)
+        {
+            PickEntity(EntityType.Guanti);
+            return true;
+        }
+
         if (inventory == EntityType.Olio && e == EntityType.Lavandino)
         {
             LogRoom("stop_melmoso");
