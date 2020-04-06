@@ -39,28 +39,24 @@
                   window.myAudioContext.resume();
                   webAudioEnabled = true;
               }
-              try { gameInstance.SetFullscreen(1); } catch {}
           }
 
-          //document.body.addEventListener('click', resumeAudio, true);
-          document.addEventListener('touchstart', resumeAudio, true);
-          document.addEventListener('click', resumeAudio, true);
+          document.body.addEventListener('click', resumeAudio, true);
           document.addEventListener('keydown', resumeAudio, true);
-          //document.getElementById("playButton").style.display = "none";
+          document.getElementById("playButton").style.display = "none";
           return UnityLoader.instantiate("gameContainer", "Build/WebGL.json", {onProgress: UnityProgress});
         }
-        //gameInstance = UnityLoader.instantiate("gameContainer", "Build/WebGL.json", {onProgress: UnityProgress});
-        var gameInstance=startAudioOnClick();
+      //var gameInstance = UnityLoader.instantiate("gameContainer", "Build/WebGL.json", {onProgress: UnityProgress});
   </script>
   </head>
   <body>
     <div class="webgl-content">
       <div id="gameContainer" style="width: 960px; height: 540px">
-        <!--button type="button" id="playButton" style="width:960px;height:540px;font-size:80px;" onclick="gameInstance.SetFullscreen(1)">GIOCA!</button-->
+        <button type="button" id="playButton" style="width:960px;height:540px;font-size:80px;" onclick="gameInstance=startAudioOnClick();gameInstance.SetFullscreen(1)">GIOCA!</button>
       </div>
       <div class="footer">
         <div class="fullscreen" onclick="gameInstance.SetFullscreen(1)"></div>
-        <div class="title">(v.34 ) Esci se ci riesci</div>
+        <div class="title">Esci se ci riesci</div>
       </div>
     </div>
   </body>
