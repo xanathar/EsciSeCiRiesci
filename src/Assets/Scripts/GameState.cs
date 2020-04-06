@@ -45,7 +45,7 @@ public static class GameState
     {
         m_PickedEntities.Add(e);
     }
-
+     
     public static void ResetNew()
     {
         m_CurrentRoom = START_ROOM;
