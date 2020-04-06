@@ -5,13 +5,14 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class InventoryObject : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
+public class InventoryObject : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler, IPointerDownHandler, IPointerUpHandler, IAdventureDropHandler
 {
     EntityType entity = EntityType.Unknown;
     public Image InventoryHighlight;
     public InventoryManager InventoryManager;
     float m_AlphaTime = float.NaN;
     bool lastCachedPositionInside = false;
+    bool mouseStatusDownInside = false;
 
     void Start()
     {
@@ -61,6 +62,11 @@ public class InventoryObject : MonoBehaviour, IPointerEnterHandler, IPointerExit
         {
             InventoryHighlight.Shade(1, 1);
             InventoryManager.StartInteraction(this);
+
+            if (InventoryManager.ActiveInteractionMode == InteractionMode.DragAndDrop)
+            {
+                InventoryManager.CurrentDropHandler = this;
+            }
         }
     }
 
@@ -86,11 +92,53 @@ public class InventoryObject : MonoBehaviour, IPointerEnterHandler, IPointerExit
             InventoryHighlight.Shade(0, 1);
             InventoryManager.StopInteraction(this);
         }
+
+        if (entity != EntityType.Unknown && mouseStatusDownInside)
+        {
+            InventoryManager.CommitInteraction(this, InteractionMode.DragAndDrop);
+        }
+
+        if (object.ReferenceEquals(InventoryManager.CurrentDropHandler, this))
+        {
+            InventoryManager.CurrentDropHandler = null;
+        }
+
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
         if (entity != EntityType.Unknown)
             InventoryManager.CommitInteraction(this);
+    }
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        mouseStatusDownInside = true;
+    }
+
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        mouseStatusDownInside = false;
+
+        if (InventoryManager != null &&
+            InventoryManager.ActiveInteractionMode == InteractionMode.DragAndDrop &&
+            InventoryManager.ActiveItem != EntityType.Unknown &&
+            InventoryManager.ActiveItem == this.GetEntityType() &&
+            InventoryManager.CurrentDropHandler != null)
+        {
+            InventoryManager.CurrentDropHandler.ConfirmDragDropInventory();
+        }
+
+    }
+
+    public void ConfirmDragDropInventory()
+    {
+        if (InventoryManager.ActiveInteractionMode == InteractionMode.DragAndDrop &&
+            InventoryManager.ActiveItem != GetEntityType() &&
+            InventoryManager.ActiveItem != EntityType.Unknown)
+        {
+            InventoryManager.CommitInteraction(this);
+            InventoryManager.CurrentDropHandler = null;
+        }
     }
 }

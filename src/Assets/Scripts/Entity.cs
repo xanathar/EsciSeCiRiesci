@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class Entity : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
+public class Entity : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler, IAdventureDropHandler
 {
     public EntityType EntityType;
     public Image highlight;
@@ -19,6 +19,7 @@ public class Entity : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, 
     private bool m_Enabled = true;
     private bool m_PermanentDisabled = false;
     private bool m_StateChecked = false;
+    private bool m_PointerInside = false;
 
     public bool IsEnabledEntity()
     {
@@ -96,9 +97,6 @@ public class Entity : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, 
         }
     }
 
-
-
-
     public void Init(RoomManager roomManager, Room room)
     {
         m_RoomManager = roomManager;
@@ -109,6 +107,7 @@ public class Entity : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, 
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        m_PointerInside = true;
         targetAlphaColor = 1f;
 
         if (IsEnabledEntity())
@@ -121,15 +120,32 @@ public class Entity : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, 
             {
                 m_Room.StartInteraction(this.GetEntityType());
             }
+
+            if (m_RoomManager != null &&
+                m_RoomManager.Inventory != null &&
+                m_RoomManager.Inventory.ActiveInteractionMode == InteractionMode.DragAndDrop)
+            {
+                m_RoomManager.Inventory.CurrentDropHandler = this;
+            }
         }
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
+        m_PointerInside = false;
         targetAlphaColor = 0f;
 
         if (IsEnabledEntity())
+        {
             m_Room.StopInteraction(this.GetEntityType());
+
+            if (m_RoomManager != null &&
+                m_RoomManager.Inventory != null &&
+                object.ReferenceEquals(m_RoomManager.Inventory.CurrentDropHandler, this))
+            {
+                m_RoomManager.Inventory.CurrentDropHandler = null;
+            }
+        }
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -154,4 +170,16 @@ public class Entity : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, 
         return EntityType;
     }
 
+    void IAdventureDropHandler.ConfirmDragDropInventory()
+    {
+        if (m_RoomManager != null &&
+            m_RoomManager.Inventory != null &&
+            m_RoomManager.Inventory.ActiveInteractionMode == InteractionMode.DragAndDrop)
+        {
+            bool usedUp = m_Room.ConfirmInventoryInteraction(m_RoomManager.Inventory.ActiveItem, this.GetEntityType());
+            m_RoomManager.Inventory.ClearActiveObject(usedUp);
+            m_RoomManager.InteractionText.text = m_RoomManager.Inventory.GetDefaultActionInteractionText();
+            m_RoomManager.Inventory.CurrentDropHandler = null;
+        }
+    }
 }

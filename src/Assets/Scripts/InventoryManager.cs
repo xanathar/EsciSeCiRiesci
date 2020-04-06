@@ -16,6 +16,8 @@ public class InventoryManager : MonoBehaviour
 
     List<InventoryObject> inventorySlots;
 
+    public IAdventureDropHandler CurrentDropHandler;
+
     internal Sprite GetSpriteForActiveItem()
     {
         if (ActiveItem != EntityType.Unknown)
@@ -25,8 +27,10 @@ public class InventoryManager : MonoBehaviour
     }
 
     InventoryObject activeObject = null;
-
+    private InteractionMode activeInteractionMode = InteractionMode.Classic;
     Dictionary<EntityType, Sprite> m_SpriteDatabase;
+
+    public InteractionMode ActiveInteractionMode { get { return activeInteractionMode; } }
 
 
     public void Awake()
@@ -109,7 +113,7 @@ public class InventoryManager : MonoBehaviour
         InteractionText.text = GetDefaultActionInteractionText();
     }
 
-    internal void CommitInteraction(InventoryObject inventoryObject)
+    internal void CommitInteraction(InventoryObject inventoryObject, InteractionMode interactionMode = InteractionMode.Classic)
     {
         if (GameState.CurrentRoom == RoomType.Corridoio || GameState.CurrentRoom == RoomType.Computer)
         {
@@ -140,7 +144,6 @@ public class InventoryManager : MonoBehaviour
             }
 
             activeObject = null;
-            return;
         }
         else
         {
@@ -159,11 +162,11 @@ public class InventoryManager : MonoBehaviour
                 default:
                     break;
             }
+
+            StartInteraction(inventoryObject);
+            activeObject = inventoryObject;
+            this.activeInteractionMode = interactionMode;
         }
-
-        StartInteraction(inventoryObject);
-
-        activeObject = inventoryObject;
     }
 
 
@@ -187,6 +190,7 @@ public class InventoryManager : MonoBehaviour
             }
 
             activeObject = null;
+            activeInteractionMode = InteractionMode.Classic;
         }
     }
 
