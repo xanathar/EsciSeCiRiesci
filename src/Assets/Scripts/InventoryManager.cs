@@ -169,6 +169,11 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
+    internal void StopDragDrop(InventoryObject fromObject)
+    {
+        if (this.activeObject == fromObject)
+            ClearActiveObject(false);
+    }
 
     public string GetDefaultActionInteractionText()
     {

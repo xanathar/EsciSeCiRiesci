@@ -123,10 +123,12 @@ public class InventoryObject : MonoBehaviour, IPointerEnterHandler, IPointerExit
         if (InventoryManager != null &&
             InventoryManager.ActiveInteractionMode == InteractionMode.DragAndDrop &&
             InventoryManager.ActiveItem != EntityType.Unknown &&
-            InventoryManager.ActiveItem == this.GetEntityType() &&
-            InventoryManager.CurrentDropHandler != null)
+            InventoryManager.ActiveItem == this.GetEntityType())
         {
-            InventoryManager.CurrentDropHandler.ConfirmDragDropInventory();
+            if (InventoryManager.CurrentDropHandler != null)
+                InventoryManager.CurrentDropHandler.ConfirmDragDropInventory();
+            else
+                InventoryManager.StopDragDrop(this);
         }
 
     }
