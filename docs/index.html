@@ -6,58 +6,58 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
     <link rel="apple-touch-icon" href="/EsciSeCiRiesci/web/icona_96.png">
-    <title>Esci se ci riesci!</title>
+    <title>Unity WebGL Player | Esci se ci riesci!</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
     <script src="TemplateData/UnityProgress.js"></script>  
     <script src="Build/UnityLoader.js"></script>
     <script>
-        function startAudioOnClick() {
-            window.AudioContext = window.AudioContext || window.webkitAudioContext;
-            var bind = Function.bind;
-            var unbind = bind.bind(bind);
+      // Script by TheRoccoB - https://forum.unity.com/threads/chrome-on-the-dev-branch-version-66-may-block-audio-for-unity-webgl.517758/page-2
+      function startAudioOnClick() {
+          window.AudioContext = window.AudioContext || window.webkitAudioContext;
+          var bind = Function.bind;
+          var unbind = bind.bind(bind);
 
-            function instantiate(constructor, args) {
-                return new (unbind(constructor, null).apply(null, args));
-            }
+          function instantiate(constructor, args) {
+              return new (unbind(constructor, null).apply(null, args));
+          }
 
-            window.AudioContext = function (AudioContext) {
-                return function () {
-                    var audioContext = instantiate(AudioContext, arguments);
-                    window.myAudioContext = audioContext;
-                    console.log('AudioContext has been instantiated!');
-                    return audioContext;
-                }
-            }(AudioContext);
+          window.AudioContext = function (AudioContext) {
+              return function () {
+                  var audioContext = instantiate(AudioContext, arguments);
+                  window.myAudioContext = audioContext;
+                  console.log('AudioContext has been instantiated!');
+                  return audioContext;
+              }
+          }(AudioContext);
 
-            var webAudioEnabled = false;
+          var webAudioEnabled = false;
 
-            function resumeAudio(){
-                if (!webAudioEnabled && window.myAudioContext){
-                    console.log('SIMMER starting Audio!');
-                    window.myAudioContext.resume();
-                    webAudioEnabled = true;
-                }
-            }
+          function resumeAudio(){
+              if (!webAudioEnabled && window.myAudioContext){
+                  console.log('Starting Audio!');
+                  window.myAudioContext.resume();
+                  webAudioEnabled = true;
+              }
+          }
 
-            document.body.addEventListener('click', resumeAudio, true);
-            document.addEventListener('keydown', resumeAudio, true);
-            //var gameInstance = UnityLoader.instantiate("gameContainer", "Build/WebGL.json", {onProgress: UnityProgress});
+          document.body.addEventListener('click', resumeAudio, true);
+          document.addEventListener('keydown', resumeAudio, true);
+          document.getElementById("playButton").style.display = "none";
+          return UnityLoader.instantiate("gameContainer", "Build/WebGL.json", {onProgress: UnityProgress});
         }
-        var gameInstance = UnityLoader.instantiate("gameContainer", "Build/WebGL.json", {onProgress: UnityProgress});
-    </script>
+      //var gameInstance = UnityLoader.instantiate("gameContainer", "Build/WebGL.json", {onProgress: UnityProgress});
+  </script>
   </head>
   <body>
     <div class="webgl-content">
-      <div id="gameContainer" style="width: 960px; height: 600px"></div>
+      <div id="gameContainer" style="width: 960px; height: 540px">
+        <button type="button" id="playButton" style="width:960px;height:540px;font-size:80px;" onclick="gameInstance=startAudioOnClick();gameInstance.SetFullscreen(1)">GIOCA!</button>
+      </div>
       <div class="footer">
-          <div class="fullscreen" onclick="gameInstance.SetFullscreen(1)"></div>
-        <!-- div class="fullscreen" onclick="startAudioOnClick()"></div -->
-        <div class="title">test8 -- Esci se ci riesci!</div>
+        <div class="fullscreen" onclick="gameInstance.SetFullscreen(1)"></div>
+        <div class="title">Esci se ci riesci</div>
       </div>
     </div>
-    <div class="">
-        <a href="https://www.iubenda.com/privacy-policy/570768" class="iubenda-white no-brand iubenda-embed iub-legal-only" title="Privacy Policy ">Privacy Policy</a><script type="text/javascript">(function (w,d) {var loader = function () {var s = d.createElement("script"), tag = d.getElementsByTagName("script")[0]; s.src="https://cdn.iubenda.com/iubenda.js"; tag.parentNode.insertBefore(s,tag);}; if(w.addEventListener){w.addEventListener("load", loader, false);}else if(w.attachEvent){w.attachEvent("onload", loader);}else{w.onload = loader;}})(window, document);</script>
-    </div>
-</body>
+  </body>
 </html>
