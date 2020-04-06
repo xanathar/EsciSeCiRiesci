@@ -39,6 +39,7 @@
                   window.myAudioContext.resume();
                   webAudioEnabled = true;
               }
+              try { gameInstance.SetFullscreen(1); } catch {}
           }
 
           //document.body.addEventListener('click', resumeAudio, true);
@@ -48,8 +49,8 @@
           //document.getElementById("playButton").style.display = "none";
           return UnityLoader.instantiate("gameContainer", "Build/WebGL.json", {onProgress: UnityProgress});
         }
-      var gameInstance = UnityLoader.instantiate("gameContainer", "Build/WebGL.json", {onProgress: UnityProgress});
-      // var gameInstance=startAudioOnClick();
+        //gameInstance = UnityLoader.instantiate("gameContainer", "Build/WebGL.json", {onProgress: UnityProgress});
+        var gameInstance=startAudioOnClick();
   </script>
   </head>
   <body>
@@ -59,7 +60,7 @@
       </div>
       <div class="footer">
         <div class="fullscreen" onclick="gameInstance.SetFullscreen(1)"></div>
-        <div class="title">(v.33 ) Esci se ci riesci</div>
+        <div class="title">(v.34 ) Esci se ci riesci</div>
       </div>
     </div>
   </body>
