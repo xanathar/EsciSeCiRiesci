@@ -52,6 +52,7 @@ public static class GameState
         m_PickedEntities.Clear();
         InventoryItems.Clear();
         m_SpecialStates.Clear();
+        Save();
     }
 
     public static void Save()
